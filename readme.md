@@ -9,3 +9,6 @@ please add your real name and GitHub username here
 * Samuel Madden (smadden4ever)
 
 ## languages & techniques
+
+* language : ReactJS
+* DB : MySQL
