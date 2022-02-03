@@ -10,5 +10,5 @@ please add your real name and GitHub username here
 
 ## languages & techniques
 
-* language : ReactJS
+* language : ReactJS, CSS, HTML
 * DB : MySQL
