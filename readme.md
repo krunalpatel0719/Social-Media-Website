@@ -24,5 +24,5 @@ This project is created for a laboratory assignment of the class Introduction to
 - Removing friends from Friends List
 - Writing comments, like/dislike button, sharing posts
 
-Languages used for platform development are ReactJs, CSS, and HTML, and we will use MySQL for DB construction.
+Languages will be used for platform development are ReactJs, CSS, and HTML, and we will use MySQL for DB construction.
 
