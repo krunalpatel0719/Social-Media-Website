@@ -1,6 +1,6 @@
 # Group-2
 
-## Team members 
+## Team Members 
 please add your real name and GitHub username here
 
 * Jinhee Yu (jy603)
@@ -8,12 +8,12 @@ please add your real name and GitHub username here
 * Isaac Martinolich (Martini-Lich)
 * Samuel Madden (smadden4ever)
 
-## languages & techniques
+## Languages & Techniques
 
 * language : ReactJS, CSS, HTML
 * DB : MySQL
 
-## Project description
+## Project Description
 This project is created for a laboratory assignment of the class Introduction to Software Engineering - Spring 2022 (CSE4214/6214). In this project, we develop a Facebook-like social media web platform. This project aims to develop and design so that users can easily and intuitively use the following functions on the platform.
 
 - Account creation, edit, deletion
