@@ -11,7 +11,7 @@ please add your real name and GitHub username here
 ## Languages & Techniques
 
 * language : ReactJS, CSS, HTML
-* DB : MySQL
+* DB : Firebase
 
 ## Project Description
 This project is created for a laboratory assignment of the class Introduction to Software Engineering - Spring 2022 (CSE4214/6214). In this project, we develop a Facebook-like social media web platform. This project aims to develop and design so that users can easily and intuitively use the following functions on the platform.
@@ -24,5 +24,5 @@ This project is created for a laboratory assignment of the class Introduction to
 - Removing friends from Friends List
 - Writing comments, like/dislike button, sharing posts
 
-Languages will be used for platform development are ReactJs, CSS, and HTML, and we will use MySQL for DB construction.
+Languages will be used for platform development are ReactJs, CSS, and HTML, and we will use Firebase for DB construction.
 
