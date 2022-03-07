@@ -1,13 +1,62 @@
+import {
+    BellIcon,
+    ChatIcon,
+    ChevronDownIcon,
+    HomeIcon,
+    UserGroupIcon,
+    ViewGridIcon,
+} from "@heroicons/react/solid";
+
+import {
+    FlagIcon,
+    PlayIcon,
+    SearchIcon,
+    ShoppingCartIcon,
+} from "@heroicons/react/outline";
+import HeaderIcon from "./HeaderIcon";
+import Image from 'next/image';
+import {auth} from '../firebase';
+
+const user = auth.currentUser;
 function Header(){
     return(
-        <div>
-            <h1>Header</h1>
+        <div className="sticky top-0 z-50 bg-white flex items-center
+        p-2 lg:px-5 shadow-md"> 
             {/* Left */}
+            <div className="flex items-center">
+                <div className="flex ml-2 items-center rounded-full bg-blue-100 p-2">
+                    <SearchIcon className="h-6 text-blue-600"/>
+                    <input className ="hidden md:inline-flex ml-2 items-center bg-transparent outline-none
+                     placeholder-blue-500 flex-shrink" type="text" placeholder="Search The Lounge"></input>
+                </div>
+            </div>
 
             {/* Center */}
+            <div className="flex justify-center flex-grow">
+                <div className="flex space-x-6 md:space-x-2">
+                    <HeaderIcon active Icon={HomeIcon}/>
+                    <HeaderIcon Icon={FlagIcon}/>
+                    <HeaderIcon Icon={UserGroupIcon}/>
+                </div>
+            </div>
 
             {/* Right */}
+            <div className="flex items-center sm:space-x-2 justify-end">
+                {/**Profile Pic 
+                <Image //onClick= {} 
+                className="rounded-full curosr-pointer"
+                scr={user.image}
+                width="40"
+                height="40"
+                layout="fixed"
+                />*/}
 
+                <p className="whitespace-nowrap font-semibold pr-3">{user.email}</p>
+                <ViewGridIcon className="icon" />
+                <ChatIcon className="icon" />
+                <BellIcon className="icon" />
+                <ChevronDownIcon className="icon" />
+            </div>
         </div>
     )
 }
