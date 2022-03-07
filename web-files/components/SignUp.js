@@ -1,16 +1,17 @@
-import React, { Component } from "react";
-export default class SignUp extends Component {
-    render() {
+import react from "react";
+
+function SignUp(){
         return (
             <div>
-                <form>
+                <form id="signup-form">
                 <h3>Sign Up</h3>
                 <div className="form-group">
                     <label>First name</label>
                     <input type="text" className="form-control" placeholder="First name" />
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Username</label>
+                    <input type="text" className="form-control" placeholder="User name" />
                 </div>
                 <div className="form-group">
                     <label>Last name</label>
@@ -18,11 +19,11 @@ export default class SignUp extends Component {
                 </div>
                 <div className="form-group">
                     <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
+                    <input type="email" className="form-control" placeholder="Enter email" id="signup-email"/>
                 </div>
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+                    <input type="password" className="form-control" placeholder="Enter password" id="signup-password"/>
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
                 <p className="forgot-password text-right">
@@ -31,5 +32,8 @@ export default class SignUp extends Component {
             </form>
             </div>
         );
-    }
 }
+
+export default SignUp
+
+
