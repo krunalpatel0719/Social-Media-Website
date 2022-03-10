@@ -2,8 +2,9 @@ import '../firebase.js'
 import Head from 'next/head'
 import Header from '../components/Header'
 import Image from 'next/image'
-import Login from '../components/Login'
+import RegistrationPage from './RegistrationPage'
 import SignUp from '../components/SignUp'
+import Login from '../components/Login'
 import Post from '../components/Post.js'
 import Sidebar from '../components/Sidebar.js'
 import Feed from '../components/Feed.js'
@@ -15,35 +16,42 @@ import { getFirestore } from "firebase/firestore";
 import "firebase/storage";
 import "../firebase";
 import { getStorage, ref, getDownloadURL, uploadString, UploadTask} from "firebase/storage";
+import { useRouter } from 'next/router'
 
-export default function Home() {
+
+function Home() {
   const auth = getAuth();
   const db = getFirestore();
   const storage = getStorage();
   const user = auth.currentUser;
 
-
-  return (
-
-    <div className='bg-gray-100 overflow-hidden'>
+{/*
+  <div className='bg-gray-100 overflow-hidden'>
       <Head>
         <title>The Lounge</title>
       </Head>
       
-      <Header />
+     
 
       <main className='flex'>
       <button type="button" id="logout">Leave the Lounge</button>
-        <Sidebar />
-        <Feed />
-        
-        
-        {/* Feed */}
-        {/*Widgets*/}
+      
       </main>
-      <Login />
+     
+      <Login /> 
       <SignUp />
     </div>
-
+*/}
+  return (
+    <div>
+      <Head>
+        <title>The Lounge</title>
+      </Head>
+      <RegistrationPage/>
+    </div>
+   
+           
   )
 }
+
+export default Home

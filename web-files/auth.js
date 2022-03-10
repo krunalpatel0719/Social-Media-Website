@@ -8,13 +8,14 @@ import setupPosts from'./components/Post';
 let status = false;
 //ensures that we are working on the browser
 if (typeof window !== "undefined") {
+    
     //gets data
     /*collection(db, 'Posts').getDoc.then(snapshot => {
         console.log(snapshot.docs);
     })
     */
     //listen for auth status changes
-
+    
     onAuthStateChanged(auth, user=> {
         if(user){
             status = true;
@@ -43,11 +44,11 @@ if (typeof window !== "undefined") {
     })
 
     //logout
-    const logout = document.querySelector('#logout');
+    /*const logout = document.querySelector('#logout');
     logout.addEventListener('click', (e)=>{
         e.preventDefault();
         signOut(auth);
-    })
+    })*/
 
     //login - moved to login.js
     const loginForm = document.querySelector('#login-form');
@@ -64,3 +65,4 @@ if (typeof window !== "undefined") {
         })
     })
 }
+
