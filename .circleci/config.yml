@@ -13,7 +13,9 @@ workflows:
     jobs:
       - yarn/test-if-changed:
           app-dir: "~/project/web-files"
-          paths: "~/project/web-files"
+          paths: "~/project/web-files/pages"
+         
+
           
           
   
