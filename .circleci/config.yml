@@ -13,5 +13,6 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - node/run:
+          app-dir: "~/project/web-files"
           yarn-run: build
 
