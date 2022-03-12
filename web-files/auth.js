@@ -39,15 +39,26 @@ if (typeof window !== "undefined") {
         console.log(email, password);
         createUserWithEmailAndPassword(auth, email, password).then(cred => {
             signupForm.reset();
-        })
+        }).catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                if (errorCode == 'auth/weak-password') {
+                    alert('The password is too weak.');
+                } else if(errorCode =='auth/email-already-in-use') {
+                    alert('email is already in use');
+                } else {
+                    alert(errorCode);
+                }
+            })
     })
 
     //logout
+    /*
     const logout = document.querySelector('#logout');
     logout.addEventListener('click', (e)=>{
         e.preventDefault();
         signOut(auth);
-    })
+    })*/
 
     //login - moved to login.js
     const loginForm = document.querySelector('#login-form');

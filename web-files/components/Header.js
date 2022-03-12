@@ -17,8 +17,9 @@ import HeaderIcon from "./HeaderIcon";
 import Image from 'next/image';
 import {auth} from '../firebase';
 
-const user = auth.currentUser;
+
 function Header(){
+    const user = auth.currentUser;
     return(
         <div className="sticky top-0 z-50 bg-white flex items-center
         p-2 lg:px-5 shadow-md"> 
@@ -50,8 +51,8 @@ function Header(){
                 height="40"
                 layout="fixed"
                 />*/}
-
-                <p className="whitespace-nowrap font-semibold pr-3">{user.email}</p>
+                {/**{user.email}</p> */  }
+                <p className="whitespace-nowrap font-semibold pr-3"> {user && (user.email)} </p>
                 <ViewGridIcon className="icon" />
                 <ChatIcon className="icon" />
                 <BellIcon className="icon" />
