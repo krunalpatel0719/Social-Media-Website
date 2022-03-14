@@ -2,8 +2,9 @@ import '../firebase.js'
 import Head from 'next/head'
 import Header from '../components/Header'
 import Image from 'next/image'
-import Login from '../components/Login'
+import RegistrationPage from './RegistrationPage'
 import SignUp from '../components/SignUp'
+import Login from '../components/Login'
 import Post from '../components/Post.js'
 import Sidebar from '../components/Sidebar.js'
 import Feed from '../components/Feed.js'
@@ -16,16 +17,21 @@ import "firebase/storage";
 import "../firebase";
 import { getStorage, ref, getDownloadURL, uploadString, UploadTask} from "firebase/storage";
 import { useRouter } from 'next/router'
+<<<<<<< HEAD
 import MainPage from './MainPage.js'
 import RegistrationPage from './RegistrationPage.js'
+=======
+>>>>>>> main
 
-export default function Home() {
+
+function Home() {
   const auth = getAuth();
   const db = getFirestore();
   const storage = getStorage();
   const user = auth.currentUser;
   if(user) return <MainPage/>
 
+<<<<<<< HEAD
   return(
     <div>
     <Head>
@@ -34,5 +40,35 @@ export default function Home() {
     <RegistrationPage/>
   </div>
 
+=======
+{/*
+  <div className='bg-gray-100 overflow-hidden'>
+      <Head>
+        <title>The Lounge</title>
+      </Head>
+      
+     
+
+      <main className='flex'>
+      <button type="button" id="logout">Leave the Lounge</button>
+      
+      </main>
+     
+      <Login /> 
+      <SignUp />
+    </div>
+*/}
+  return (
+    <div>
+      <Head>
+        <title>The Lounge</title>
+      </Head>
+      <RegistrationPage/>
+    </div>
+   
+           
+>>>>>>> main
   )
 }
+
+export default Home
