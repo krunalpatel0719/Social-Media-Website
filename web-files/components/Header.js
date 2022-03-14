@@ -52,11 +52,7 @@ function Header(){
                 layout="fixed"
                 />*/}
                 {/**{user.email}</p> */  }
-<<<<<<< HEAD
                 <p className="whitespace-nowrap font-semibold pr-3"> {user && (user.email)} </p>
-=======
-                <p className="whitespace-nowrap font-semibold pr-3"> Test </p>
->>>>>>> main
                 <ViewGridIcon className="icon" />
                 <ChatIcon className="icon" />
                 <BellIcon className="icon" />
