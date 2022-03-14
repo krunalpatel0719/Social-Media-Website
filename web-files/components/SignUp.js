@@ -57,7 +57,11 @@ function SignUp() {
                       focus:border-blue-600  
                       focus:outline-none"
                         placeholder="User name"
+<<<<<<< HEAD
+                      required minLength={6}/>
+=======
                       />
+>>>>>>> main
                     </div>
                     <div className="py-2 form-group">
                       <span className="px-1 text-sm text-gray-600">
@@ -112,4 +116,8 @@ function SignUp() {
   );
 }
 
+<<<<<<< HEAD
 export default SignUp;
+=======
+export default SignUp;
+>>>>>>> main

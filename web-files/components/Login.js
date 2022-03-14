@@ -71,4 +71,8 @@ function Login(props) {
   );
 }
 
+<<<<<<< HEAD
 export default Login;
+=======
+export default Login;
+>>>>>>> main
