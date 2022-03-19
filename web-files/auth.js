@@ -7,6 +7,8 @@ import setupPosts from'./components/Post';
 
 let status = false;
 //ensures that we are working on the browser
+
+
 if (typeof window !== "undefined") {
     
     //gets data
@@ -28,7 +30,7 @@ if (typeof window !== "undefined") {
     })
 
     //signup
-    const signupForm = document.querySelector('#signup-form');
+  /*  const signupForm = document.querySelector('#signup-form');
     signupForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -53,19 +55,17 @@ if (typeof window !== "undefined") {
             })
     })
 
+    */
     //logout
-<<<<<<< HEAD
-    /*
-    const logout = document.querySelector('#logout');
-=======
     /*const logout = document.querySelector('#logout');
->>>>>>> main
     logout.addEventListener('click', (e)=>{
         e.preventDefault();
         signOut(auth);
     })*/
 
     //login - moved to login.js
+
+    /*
     const loginForm = document.querySelector('#login-form');
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -79,5 +79,7 @@ if (typeof window !== "undefined") {
             loginForm.reset();
         })
     })
+
+    */
 }
 

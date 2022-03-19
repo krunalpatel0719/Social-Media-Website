@@ -2,13 +2,14 @@ import react from "react";
 
 function SignUp() {
   return (
-    <div className="container max-w-full mx-auto py-10 px-6">
-      <div className="font-sans">
-        <div className="max-w-sm mx-auto px-6">
+    
+    <div className="overflow-auto fixed z-50 mx-auto">
+      <div className="font-sans bg-red-500">
+        <div className="bg-white mx-auto pb-5 px-5">
           <div className="relative flex flex-wrap">
             <div className="w-full relative">
               <div className="mt-6">
-                <div className="text-center text-xl font-semibold text-black">
+                <div className="text-center text-lg font-bold text-white">
                   Create an Account
                 </div>
                 <form id="signup-form" className="mt-8">
@@ -57,11 +58,7 @@ function SignUp() {
                       focus:border-blue-600  
                       focus:outline-none"
                         placeholder="User name"
-<<<<<<< HEAD
                       required minLength={6}/>
-=======
-                      />
->>>>>>> main
                     </div>
                     <div className="py-2 form-group">
                       <span className="px-1 text-sm text-gray-600">
@@ -101,9 +98,9 @@ function SignUp() {
                       className="mt-3 text-lg font-semibold text-centered
                             bg-blue-600 w-full text-white rounded-lg
                             px-6 py-3 block shadow-xl hover:text-white hover:bg-blue-500"
-                    >
-                      {/*className="btn btn-primary btn-block"> */}
-                      Sign Up
+                    > 
+                   
+                     Sign Up
                     </button>
                   </div>
                 </form>
@@ -112,12 +109,8 @@ function SignUp() {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div> 
+  ); 
 }
 
-<<<<<<< HEAD
 export default SignUp;
-=======
-export default SignUp;
->>>>>>> main
