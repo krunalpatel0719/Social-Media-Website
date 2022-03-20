@@ -1,9 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
-import { MailIcon } from "@heroicons/react/outline";
-import { LockClosedIcon } from "@heroicons/react/outline";
-import { EyeIcon } from "@heroicons/react/outline";
-import { EyeOffIcon } from "@heroicons/react/outline";
+import ClientOnlyPortal from './ClientOnlyPortal'
+import { 
+  MailIcon,
+  LockClosedIcon,
+  EyeIcon,
+  EyeOffIcon
+} from "@heroicons/react/outline";
+
 import {
   createUserWithEmailAndPassword,
   setPersistence,
@@ -22,7 +26,7 @@ function Login(props) {
     password: "",
   });
 
-  const [showSignUp, setShowSignUp] = React.useState(true);
+  const [showSignUp, setShowSignUp] = React.useState(false);
 
   const [passwordShown, setPasswordShown] = React.useState({
     showPassword: false,
@@ -65,7 +69,7 @@ function Login(props) {
       .then((cred) => {
         //call next function to display timeline for user
         handleErrorMessage({visible:false, message:""})
-        loginForm.reset();
+        
         router.push("/MainPage")
       })
       .catch((error) => {
@@ -173,7 +177,8 @@ function Login(props) {
                       Don't have an account?
                     </span>
                     <button
-                      type="submit"
+                      type="button"
+                      onClick = {() =>setShowSignUp(true)}
                       className="mt-3 text-lg font-semibold text-centered w-full text-white rounded-full px-6 py-3 block shadow-xl
                         transition ease-in-out bg-blue-600 hover:bg-blue-500 duration-400"
                     >
@@ -187,8 +192,10 @@ function Login(props) {
         </div>
       </div>
       {showSignUp && (
-        <SignUp/>
-      )}
+         <ClientOnlyPortal selector="#registration-portal">
+            <SignUp  onClose = {() => setShowSignUp(false)} />
+          </ClientOnlyPortal>  
+    )}
     </div>
     
   );

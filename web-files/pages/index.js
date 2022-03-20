@@ -54,12 +54,21 @@ function Home() {
   }, []);
   if (!setLoadPage) {return <div></div> }
   return(
-    <div className="bg-gradient-to-tr from-blue-500 via-purple-500 to-pink-500 h-screen">
-    <Head>
-      <title>The Lounge</title>
-    </Head>
-    <RegistrationPage/>
+    <div className="relative">
+      <div className=" bg-gradient-to-tr top-0 left-0 from-blue-500 via-purple-500 to-pink-500 h-screen">
+    
+        <Head>
+          <title>The Lounge</title>
+        </Head>
+        <RegistrationPage/>
+    
+    
+   
+      {/*</div></div><div id='registration-portal' className=" absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">*/}
+   </div>
+    
   </div>
+  
 
   )
 }
