@@ -1,12 +1,10 @@
+import React, { useState, useEffect } from "react";
 
-import React, { useState, useEffect } from 'react';
-
-
-import { 
+import {
   MailIcon,
   LockClosedIcon,
   EyeIcon,
-  EyeOffIcon
+  EyeOffIcon,
 } from "@heroicons/react/outline";
 
 import {
@@ -16,10 +14,11 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth, db } from "../firebase";
-import { useRouter } from 'next/router'
+import { auth } from "../firebase";
+import { useRouter } from "next/router";
 
-function SignUp({onClose}) {
+import { doc, addDoc, setDoc, getDoc, getFirestore } from "firebase/firestore";
+function SignUp({ onClose }) {
   const initialFormData = Object.freeze({
     first_name: "",
     last_name: "",
@@ -39,7 +38,7 @@ function SignUp({onClose}) {
     value: "",
   });
 
- const handleClickShowPassword = (e) => {
+  const handleClickShowPassword = (e) => {
     e.preventDefault();
     setPasswordShown({
       ...passwordShown,
@@ -47,212 +46,253 @@ function SignUp({onClose}) {
     });
   };
   const handleFormChange = (e) => {
+    let target_value = e.target.value.trim();
+    if (e.target.name == "username") {
+      target_value = target_value.replace(/\s+/g, "");
+    } else if (e.target.name == "first_name") {
+      target_value =
+        target_value.charAt(0).toUpperCase() + target_value.slice(1);
+    } else if (e.target.name == "last_name") {
+      target_value = target_value.replace(/\s+/g, "");
+      target_value =
+        target_value.charAt(0).toUpperCase() + target_value.slice(1);
+    }
     updateFormData({
       ...formData,
 
       // Trimming any whitespace
-      [e.target.name]: e.target.value.trim(),
+      [e.target.name]: target_value,
+    });
+  };
+
+  const setDocument = async (uid) => {
+    const db = getFirestore(cred);
+
+    await setDoc(doc(db, "Users", cred.user.uid), {
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      username: formData.username,
+      email: formData.email,
+      a
     });
   };
 
   const handleErrorMessage = (e) => {
     setErrorMessage({
       showError: e.visible,
-      value: e.message
-    })
-  }
-  
+      value: e.message,
+    });
+  };
+
   const signupSubmit = (e) => {
-    
     e.preventDefault();
-    if (formData.username.length <=0) {
-      handleErrorMessage({visible:true, message:"Username can't be empty"})
-      return false
-    
-    }
-    else if  (formData.username.length <=6) {
-      handleErrorMessage({visible:true, message:"Username can't be less than 6 characters"})
-      return false
-    
+    const usernameRegex = /^[a-zA-Z0-9]+$/;
+    if (formData.username.length <= 0) {
+      handleErrorMessage({ visible: true, message: "Username can't be empty" });
+      return false;
+    } else if (formData.username.length <= 6) {
+      handleErrorMessage({
+        visible: true,
+        message: "Username can't be less than 6 characters",
+      });
+      return false;
+      
+    } else if (usernameRegex.test(formData.username) == false) {
+      handleErrorMessage({
+        visible: true,
+        message: "Username has invalid character must only contain letters and numbers",
+      });
+     
     } 
-    else if (formData.first_name.length <=0) {
-        handleErrorMessage({visible:true, message:"First name can't be empty"})
-        return false
-    }
-    else if (formData.last_name.length <=0) {
-        handleErrorMessage({visible:true, message:"Last name can't be empty"})
-        return false
-    }
-    else {
+    else if (formData.first_name.length <= 0) {
+      handleErrorMessage({
+        visible: true,
+        message: "First name can't be empty",
+      });
+      return false;
+    } else if (formData.last_name.length <= 0) {
+      handleErrorMessage({
+        visible: true,
+        message: "Last name can't be empty",
+      });
+      return false;
+    } else {
       createUserWithEmailAndPassword(auth, formData.email, formData.password)
         .then((cred) => {
-          //call next function to display timeline for user
-          handleErrorMessage({visible:false, message:""})
-          
-          
+          setDocument(cred)
+            .then(() => {
+              handleErrorMessage({ visible: false, message: "" });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
-      
+
           switch (errorCode) {
-            case 'auth/weak-password':
-              handleErrorMessage({visible:true, message:"Password is too weak please make it stronger"})
-              break
-            case 'auth/email-already-in-use':
-              handleErrorMessage({visible:true, message:"Email already in use please try again"})
-              break
-            case 'auth/invalid-email':
-              handleErrorMessage({visible:true, message:"Invalid email please include an @"})  
-              break
-            case 'auth/maximum-user-count-exceeded':
-              handleErrorMessage({visible:true, message:"Maximum signup attempts exceeded please try again later"})  
-              break
-            case 'auth/too-many-requests':
-              handleErrorMessage({visible:true, message:"Too many signup attempts please try again later"})  
-              break
+            case "auth/weak-password":
+              handleErrorMessage({
+                visible: true,
+                message: "Password is too weak please make it stronger",
+              });
+              break;
+            case "auth/email-already-in-use":
+              handleErrorMessage({
+                visible: true,
+                message: "Email already in use please try again",
+              });
+              break;
+            case "auth/invalid-email":
+              handleErrorMessage({
+                visible: true,
+                message: "Invalid email please include an @",
+              });
+              break;
+            case "auth/maximum-user-count-exceeded":
+              handleErrorMessage({
+                visible: true,
+                message:
+                  "Maximum signup attempts exceeded please try again later",
+              });
+              break;
+            case "auth/too-many-requests":
+              handleErrorMessage({
+                visible: true,
+                message: "Too many signup attempts please try again later",
+              });
+              break;
             default:
           }
-        
-          
-        }
-      );
+        });
     }
   };
   return (
-   
-   
     <div className="flex h-screen m-auto">
       <div className="font-sans m-auto flex-grow">
         <div className="shadow-md rounded-xl bg-white mx-auto py-12 pb-3 px-16 ">
           <div className="relative flex flex-wrap">
             <div className="">
-                <div className="">
+              <div className="">
                 <div className="font-bold font-poppins pb-6 text-center text-4xl text-black">
                   Create an Account
                 </div>
-                  <form id="signup-form" className="">
+                <form id="signup-form" className="">
                   <div className="form-group mx-auto max-w-lg">
-                    <span className="px-2 text-sm text-gray-600">First Name</span>
+                    <span className=" text-sm text-gray-600">First Name</span>
 
                     <div className="flex relative items-center">
-                      
                       <input
                         name="first_name"
                         onChange={handleFormChange}
                         placeholder="Enter First Name"
                         type="text"
-                        className="form-control pl-3 text-md  py-1   w-full 
+                        className="capitalize form-control pl-1 text-md  py-1   w-full 
                               bg-white border-b-2 border-gray-300 placeholder-gray-600  focus:placeholder-gray-500 focus:bg-white focus:border-blue-600 focus:outline-none"
                       ></input>
                     </div>
-                      <div className="py-2 form-group">
-                        <span className="px-2 text-sm text-gray-600">Last Name</span>
-                          <div className="flex relative items-center">
-                          
-                          <input
-                            name="last_name"
-                            onChange={handleFormChange}
-                            placeholder="Enter Last Name"
-                            type="text"
-                            className="form-control pl-3 text-md  py-1   w-full 
+                    <div className="py-2 form-group">
+                      <span className="text-sm text-gray-600">Last Name</span>
+                      <div className="flex relative items-center">
+                        <input
+                          name="last_name"
+                          onChange={handleFormChange}
+                          placeholder="Enter Last Name"
+                          type="text"
+                          className="capitalize form-control pl-1 text-md  py-1   w-full 
                                   bg-white border-b-2 border-gray-300 placeholder-gray-600  focus:placeholder-gray-500 focus:bg-white focus:border-blue-600 focus:outline-none"
-                          ></input>
-                        </div>
-                   
+                        ></input>
                       </div>
-                      <div className="py-2 form-group">
-                        <span className="px-2 text-sm text-gray-600">Username</span>
-                          <div className="flex relative items-center">
-                          
-                          <input
-                            name="username"
-                            onChange={handleFormChange}
-                            placeholder="Enter Username"
-                            type="text"
-                           
-                            className="form-control pl-3 text-md  py-1   w-full 
+                    </div>
+                    <div className="py-2 form-group">
+                      <span className="text-sm text-gray-600">Username</span>
+                      <div className="flex relative items-center">
+                        <input
+                          name="username"
+                          onChange={handleFormChange}
+                          placeholder="Enter Username"
+                          type="text"
+                          className="form-control pl-1 text-md  py-1   w-full 
                                   bg-white border-b-2 border-gray-300 placeholder-gray-600  focus:placeholder-gray-500 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            required minLength={6}/
-                          >
-                        </div>
-                   
+                          required
+                          minLength={6}
+                        />
                       </div>
-                      <div className="py-2 form-group">
-                        <span className="px-2 text-sm text-gray-600">Email</span>
-                          <div className="flex relative items-center">
-                          
-                          <input
-                            name="email"
-                            onChange={handleFormChange}
-                            placeholder="Enter Email"
-                            type="email"
-                            className="form-control pl-3 text-md  py-1   w-full 
+                    </div>
+                    <div className="py-2 form-group">
+                      <span className="text-sm text-gray-600">Email</span>
+                      <div className="flex relative items-center">
+                        <input
+                          name="email"
+                          onChange={handleFormChange}
+                          placeholder="Enter Email"
+                          type="email"
+                          className="form-control pl-1 text-md  py-1   w-full 
                                   bg-white border-b-2 border-gray-300 placeholder-gray-600  focus:placeholder-gray-500 focus:bg-white focus:border-blue-600 focus:outline-none"
-                          ></input>
-                        </div>
-                   
+                        ></input>
                       </div>
-                      <div className="py-2 form-group">
-                        <span className="px-2 text-sm text-gray-600">Password</span>
-                          <div className="flex relative items-center">
-                          
-                          <input
-                            name="password"
-                            onChange={handleFormChange}
-                            placeholder="Enter Password"
-                            
-                            type={passwordShown.showPassword ? "text" : "password"}
-                            className="form-control pl-3 text-md  py-1   w-full 
+                    </div>
+                    <div className="py-2 form-group">
+                      <span className="text-sm text-gray-600">Password</span>
+                      <div className="flex relative items-center">
+                        <input
+                          name="password"
+                          onChange={handleFormChange}
+                          placeholder="Enter Password"
+                          type={
+                            passwordShown.showPassword ? "text" : "password"
+                          }
+                          className="form-control pl-1 text-md  py-1   w-full 
                                   bg-white border-b-2 border-gray-300 placeholder-gray-600  focus:placeholder-gray-500 focus:bg-white focus:border-blue-600 focus:outline-none"
-                          ></input>
-                           <button
-                            type="button"
-                            onClick={handleClickShowPassword}
-                            className="text-gray-500 left-80 absolute"
-                          >
-                            {passwordShown.showPassword ? (
-                              <EyeOffIcon className="h-6"></EyeOffIcon>
-                            ) : (
-                              <EyeIcon className="h-6"></EyeIcon>
-                            )}
-                          </button>
-                        </div>
-                   
-                      </div>
-                      {errorMessage.showError &&
-                        <div className="pl-1 mt-1 text-m text-red-500"> {errorMessage.value} </div>
-                      }
-                      <div className="flex flex-col h-48 justify-evenly ">
-                        {/*<Link href="/MainPage"> */}
-                        <button
-                          type="submit"
-                          onClick={signupSubmit}
-                          className="text-lg font-semibold text-centered w-full text-white rounded-full px-6 py-3 block shadow-xl
-                              transition ease-in-ou  bg-blue-600 hover:bg-blue-500 duration-400"
-                        >
-                          Register
-                        </button>
+                        ></input>
                         <button
                           type="button"
-                          onClick = {onClose}
-                          className="text-lg font-semibold text-centered w-full text-white rounded-full px-6 py-3 block shadow-xl
-                              transition ease-in-ou  bg-blue-600 hover:bg-blue-500 duration-400"
+                          onClick={handleClickShowPassword}
+                          className="text-gray-500 left-80 absolute"
                         >
-                          Close
+                          {passwordShown.showPassword ? (
+                            <EyeOffIcon className="h-6"></EyeOffIcon>
+                          ) : (
+                            <EyeIcon className="h-6"></EyeIcon>
+                          )}
                         </button>
                       </div>
-                     
                     </div>
-                  </form>
-                </div>
+                    {errorMessage.showError && (
+                      <div className="pl-1 w-80 mt-1 text-m text-red-500">
+                      
+                        {errorMessage.value}
+                        
+                      </div>
+                    )}
+                    <div className="flex flex-col h-48 justify-evenly ">
+                      {/*<Link href="/MainPage"> */}
+                      <button
+                        type="submit"
+                        onClick={signupSubmit}
+                        className="text-lg font-semibold text-centered w-full text-white rounded-full px-6 py-3 block shadow-xl
+                              transition ease-in-ou  bg-blue-600 hover:bg-blue-500 duration-400"
+                      >
+                        Register
+                      </button>
+                      <button
+                        type="button"
+                        onClick={onClose}
+                        className="text-lg font-semibold text-centered w-full text-white rounded-full px-6 py-3 block shadow-xl
+                              transition ease-in-ou  bg-blue-600 hover:bg-blue-500 duration-400"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-  
-
-  ); 
+    </div>
+  );
 }
 
 export default SignUp;
