@@ -17,7 +17,7 @@ import {
 import { auth } from "../firebase";
 import { useRouter } from "next/router";
 
-import { doc, addDoc, setDoc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, addDoc, setDoc, getDocs, getFirestore, collection, query, where} from "firebase/firestore";
 function SignUp({ onClose }) {
   const initialFormData = Object.freeze({
     first_name: "",
@@ -87,6 +87,17 @@ function SignUp({ onClose }) {
   const signupSubmit = (e) => {
     e.preventDefault();
     const usernameRegex = /^[a-zA-Z0-9]+$/;
+
+  /* Add Query check to see if username exists already
+    const docRef = collection(db, "Users");
+   
+    const q = query(docRef, where("username", "==", formData.username));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot) {
+      handleErrorMessage({ visible: true, message: "Username doesn't exist" });
+      return false;
+    }
+    */
     if (formData.username.length <= 0) {
       handleErrorMessage({ visible: true, message: "Username can't be empty" });
       return false;
