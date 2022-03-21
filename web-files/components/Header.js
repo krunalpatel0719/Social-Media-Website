@@ -1,7 +1,7 @@
 import {
     BellIcon,
     ChatIcon,
-    ChevronDownIcon,
+    LogoutIcon,
     HomeIcon,
     UserGroupIcon,
     ViewGridIcon,
@@ -17,9 +17,14 @@ import HeaderIcon from "./HeaderIcon";
 import Image from 'next/image';
 import {auth} from '../firebase';
 
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 function Header(){
     const user = auth.currentUser;
+    const handleLogOut = (e) => {
+        
+        signOut(auth)
+    }
     return(
         <div className="sticky top-0 z-50 bg-white flex items-center
         p-2 lg:px-5 shadow-md"> 
@@ -52,11 +57,16 @@ function Header(){
                 layout="fixed"
                 />*/}
                 {/**{user.email}</p> */  }
-                <p className="whitespace-nowrap font-semibold pr-3"> {user && (user.email)} </p>
+                <p className="flex whitespace-nowrap font-semibold pr-3">{user && (user.email)} </p>
                 <ViewGridIcon className="icon" />
                 <ChatIcon className="icon" />
                 <BellIcon className="icon" />
-                <ChevronDownIcon className="icon" />
+                <button type="button" onClick ={handleLogOut}>
+                    <LogoutIcon className="icon"/>
+                </button>
+                
+                    
+                
             </div>
         </div>
     )
