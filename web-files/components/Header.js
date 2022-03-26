@@ -15,16 +15,29 @@ import {
 } from "@heroicons/react/outline";
 import HeaderIcon from "./HeaderIcon";
 import Image from 'next/image';
-import {auth} from '../firebase';
+import {auth, db} from '../firebase';
+import React, { useState, useEffect } from 'react';
 
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+
 
 function Header(){
     const user = auth.currentUser;
+  
     const handleLogOut = (e) => {
         
         signOut(auth)
     }
+    const [username, setUsername] = React.useState(user && (user.displayName));
+    
+    const setPageUsername = async () => {
+        const docRef = doc(db, "Users", user.uid);
+        const docSnap = await getDoc(docRef);
+        setUsername(docSnap.data().username)
+    }
+   
+    setPageUsername()
     return(
         <div className="sticky top-0 z-50 bg-white flex items-center
         p-2 lg:px-5 shadow-md"> 
@@ -47,7 +60,7 @@ function Header(){
             </div>
 
             {/* Right */}
-            <div className="flex items-center sm:space-x-2 justify-end">
+            <div className=" flex items-center sm:space-x-2 justify-end">
                 {/**Profile Pic 
                 <Image //onClick= {} 
                 className="rounded-full curosr-pointer"
@@ -57,7 +70,7 @@ function Header(){
                 layout="fixed"
                 />*/}
                 {/**{user.email}</p> */  }
-                <p className="flex whitespace-nowrap font-semibold pr-3">{user && (user.email)} </p>
+                <p className="flex whitespace-nowrap font-semibold pr-3">{username} </p>
                 <ViewGridIcon className="icon" />
                 <ChatIcon className="icon" />
                 <BellIcon className="icon" />

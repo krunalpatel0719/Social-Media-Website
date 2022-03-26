@@ -13,12 +13,18 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db} from "../firebase";
 import { useRouter } from "next/router";
 
-import { doc, addDoc, setDoc, getDocs, getFirestore, collection, query, where} from "firebase/firestore";
+import { doc, addDoc, setDoc, getDoc, getDocs, getFirestore, collection, query, where} from "firebase/firestore";
+
+
 function SignUp({ onClose }) {
+ 
+  // Variables and hooks 
+
   const initialFormData = Object.freeze({
     first_name: "",
     last_name: "",
@@ -38,6 +44,8 @@ function SignUp({ onClose }) {
     value: "",
   });
 
+  // Password show/hide handler 
+
   const handleClickShowPassword = (e) => {
     e.preventDefault();
     setPasswordShown({
@@ -45,6 +53,9 @@ function SignUp({ onClose }) {
       showPassword: !passwordShown.showPassword,
     });
   };
+
+  // Handles and sets the variables that correspond to the form input 
+
   const handleFormChange = (e) => {
     let target_value = e.target.value.trim();
     if (e.target.name == "username") {
@@ -65,15 +76,15 @@ function SignUp({ onClose }) {
     });
   };
 
-  const setDocument = async (uid) => {
-    const db = getFirestore(cred);
+  // Sets Users in the database and adds in user's info
 
+  const setDocument = async (cred) => {
     await setDoc(doc(db, "Users", cred.user.uid), {
       first_name: formData.first_name,
       last_name: formData.last_name,
       username: formData.username,
       email: formData.email,
-      a
+      
     });
   };
 
@@ -84,20 +95,37 @@ function SignUp({ onClose }) {
     });
   };
 
-  const signupSubmit = (e) => {
-    e.preventDefault();
-    const usernameRegex = /^[a-zA-Z0-9]+$/;
+  // Signup submition function 
 
-  /* Add Query check to see if username exists already
+  const signupSubmit = async (e) => {
+    e.preventDefault();
+    
+
+    const usernameRegex = /^[a-zA-Z0-9]+$/;
+    let usernameTaken = false;
+
+    // Username already exists check
+
     const docRef = collection(db, "Users");
-   
     const q = query(docRef, where("username", "==", formData.username));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot) {
-      handleErrorMessage({ visible: true, message: "Username doesn't exist" });
+    await getDocs(q).then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        if (doc.data()) {
+          usernameTaken = true;
+        
+        }
+      });
+
+    });
+    
+    // Basic validation checks and create account with firebase function
+
+    if (usernameTaken == true) {
+      handleErrorMessage({visible: true, message: "Username already exists please choose a new one"});
       return false;
     }
-    */
+  
     if (formData.username.length <= 0) {
       handleErrorMessage({ visible: true, message: "Username can't be empty" });
       return false;
@@ -133,6 +161,9 @@ function SignUp({ onClose }) {
           setDocument(cred)
             .then(() => {
               handleErrorMessage({ visible: false, message: "" });
+              updateProfile(cred.user, {
+                displayName: formData.username
+              }).then(() => {}).catch((err) => {console.log(err)})
             })
             .catch((err) => {
               console.log(err);
