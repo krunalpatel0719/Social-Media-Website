@@ -1,0 +1,88 @@
+import {
+    BellIcon,
+    ChatIcon,
+    LogoutIcon,
+    HomeIcon,
+    UserGroupIcon,
+    ViewGridIcon,
+} from "@heroicons/react/solid";
+
+import {
+    FlagIcon,
+    PlayIcon,
+    SearchIcon,
+    ShoppingCartIcon,
+} from "@heroicons/react/outline";
+import HeaderIcon from "./HeaderIcon";
+import Image from 'next/image';
+import {auth, db} from '../firebase';
+import React, { useState, useEffect } from 'react';
+
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+
+
+function Header(){
+    const user = auth.currentUser;
+  
+    const handleLogOut = (e) => {
+        
+        signOut(auth)
+    }
+    const [username, setUsername] = React.useState(user && (user.displayName));
+    
+    const setPageUsername = async () => {
+        const docRef = doc(db, "Users", user.uid);
+        const docSnap = await getDoc(docRef);
+        setUsername(docSnap.data().username)
+    }
+   
+    setPageUsername()
+    return(
+        <div className="sticky top-0 z-50 bg-white flex items-center
+        p-2 lg:px-5 shadow-md"> 
+            {/* Left */}
+            <div className="flex items-center">
+                <div className="flex ml-2 items-center rounded-full bg-blue-100 p-2">
+                    <SearchIcon className="h-6 text-blue-600"/>
+                    <input className ="hidden md:inline-flex ml-2 items-center bg-transparent outline-none
+                     placeholder-blue-500 flex-shrink" type="text" placeholder="Search The Lounge"></input>
+                </div>
+            </div>
+
+            {/* Center */}
+            <div className="flex justify-center flex-grow">
+                <div className="flex space-x-6 md:space-x-2">
+                    <HeaderIcon active Icon={HomeIcon}/>
+                    <HeaderIcon Icon={FlagIcon}/>
+                    <HeaderIcon Icon={UserGroupIcon}/>
+                </div>
+            </div>
+
+            {/* Right */}
+            <div className=" flex items-center sm:space-x-2 justify-end">
+                {/**Profile Pic 
+                <Image //onClick= {} 
+                className="rounded-full curosr-pointer"
+                scr={user.image}
+                width="40"
+                height="40"
+                layout="fixed"
+                />*/}
+                {/**{user.email}</p> */  }
+                <p className="flex whitespace-nowrap font-semibold pr-3">{username} </p>
+                <ViewGridIcon className="icon" />
+                <ChatIcon className="icon" />
+                <BellIcon className="icon" />
+                <button type="button" onClick ={handleLogOut}>
+                    <LogoutIcon className="icon"/>
+                </button>
+                
+                    
+                
+            </div>
+        </div>
+    )
+}
+
+export default Header
