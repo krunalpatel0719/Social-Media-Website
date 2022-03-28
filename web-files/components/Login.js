@@ -167,7 +167,7 @@ function Login(props) {
                     <button
                       onClick={loginSubmit}
                       className="mt-3 text-lg font-semibold text-centered w-full text-white rounded-full px-6 py-3 block shadow-xl
-                          transition ease-in-ou  bg-blue-600 hover:bg-blue-500 duration-400"
+                          transition ease-in-out  bg-blue-600 hover:bg-blue-500 duration-400"
                     >
                       Login
                     </button>

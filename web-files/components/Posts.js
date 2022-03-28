@@ -7,20 +7,22 @@ import {collection, query, orderBy} from "firebase/firestore";
      query(collection(db, "Posts"), orderBy("timestamp", "desc"))
   );
   //orderBy("name", "desc")
-  
+ 
   return (
     <div>
     {
       realtimePosts?.docs.map((post) => (
+        
           <Post
-            key={post.id}
+            key_id={post.id}
             name={post.data().username}
             message={post.data().content}
-           
+            uid = {post.data().uid}
             timestamp={post.data().timestamp}
-            
+            likes = {post.data().likes}
             postImage={post.data().postImage}
           />
+          
         ))
      }
   </div>)
