@@ -27,6 +27,10 @@ import React, { useState, useEffect} from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { usePopper } from "react-popper";
 
+function Post({ name, message, postImage, timestamp }) {
+  const GoToComment = () =>{
+    window.location.href="/CommentsPage";
+}
 function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
   const user = auth.currentUser;
 
@@ -193,7 +197,8 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
         </div>
 
         <div className="inputIcon p-3 rounded-none">
-          <ChatAltIcon className="h-4" />
+          <button onClick={GoToComment}><ChatAltIcon className="h-4" /></button>
+          
           <p className="text-xs sm:text-base">Comment</p>
         </div>
 

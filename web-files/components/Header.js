@@ -5,6 +5,7 @@ import {
     HomeIcon,
     UserGroupIcon,
     ViewGridIcon,
+    CogIcon
 } from "@heroicons/react/solid";
 
 import {
@@ -18,7 +19,7 @@ import Image from 'next/image';
 import {auth, db} from '../firebase';
 import React, { useState, useEffect } from 'react';
 
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { deleteUser, getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 
 
@@ -29,6 +30,15 @@ function Header(){
         
         signOut(auth)
     }
+    
+    const GoToAccount = () =>{
+        window.location.href="/SettingsPage";
+    }
+    
+    const GoToFeed = () =>{
+        window.location.href="/MainPage";
+    }
+    
     const [username, setUsername] = React.useState(user && (user.displayName));
     
     const setPageUsername = async () => {
@@ -53,7 +63,9 @@ function Header(){
             {/* Center */}
             <div className="flex justify-center flex-grow">
                 <div className="flex space-x-6 md:space-x-2">
-                    <HeaderIcon active Icon={HomeIcon}/>
+                <button type="button" onClick={GoToFeed}>
+                    <HeaderIcon active Icon={HomeIcon} />
+                </button>
                     <HeaderIcon Icon={FlagIcon}/>
                     <HeaderIcon Icon={UserGroupIcon}/>
                 </div>
@@ -72,7 +84,7 @@ function Header(){
                 {/**{user.email}</p> */  }
                 <p className="flex whitespace-nowrap font-semibold pr-3">{username} </p>
                 <ViewGridIcon className="icon" />
-                <ChatIcon className="icon" />
+                <CogIcon className="icon" onClick={GoToAccount}/>
                 <BellIcon className="icon" />
                 <button type="button" onClick ={handleLogOut}>
                     <LogoutIcon className="icon"/>
