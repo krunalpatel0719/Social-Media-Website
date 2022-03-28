@@ -3,6 +3,9 @@ import Image from "next/image";
 import {DotsHorizontalIcon} from "@heroicons/react/solid";
 
 function Post({ name, message, postImage, timestamp }) {
+  const GoToComment = () =>{
+    window.location.href="/CommentsPage";
+}
   return (
     <div className="flex flex-col ">
       <div className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">
@@ -37,7 +40,8 @@ function Post({ name, message, postImage, timestamp }) {
         </div>
 
         <div className="inputIcon p-3 rounded-none">
-          <ChatAltIcon className="h-4" />
+          <button onClick={GoToComment}><ChatAltIcon className="h-4" /></button>
+          
           <p className="text-xs sm:text-base">Comment</p>
         </div>
 
