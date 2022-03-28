@@ -46,7 +46,7 @@ function InputBox() {
             uid: user.uid,
             username: user.displayName,
             timestamp: serverTimestamp(),
-            
+            likes: 0,
         }).then( doc2 =>{
             if(imageToPost){
                 const storageRef = ref(storage, `Posts/${doc2.id}`);
