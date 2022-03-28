@@ -15,6 +15,11 @@
     "static/development/_middlewareManifest.js"
   ],
   "pages": {
+    "/CommentsPage": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/CommentsPage.js"
+    ],
     "/MainPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

@@ -27,13 +27,11 @@ import React, { useState, useEffect} from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { usePopper } from "react-popper";
 
-function Post({ name, message, postImage, timestamp }) {
-  const GoToComment = () =>{
-    window.location.href="/CommentsPage";
-}
 function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
   const user = auth.currentUser;
-
+  const GoToComment = () =>{
+    window.location.href="/CommentsPage";
+  }
   let [referenceElement, setReferenceElement] = useState();
   let [popperElement, setPopperElement] = useState();
   let [newMessage, setNewMessage] = useState("");
@@ -211,4 +209,4 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
   );
 }
 
-export default Post;
+export default Post
