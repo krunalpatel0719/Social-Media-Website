@@ -17,6 +17,7 @@ import {
   updateDoc,
   getDocs,
   getFirestore,
+  deleteField,
   collection,
   query,
   where,
@@ -72,13 +73,23 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
     });
     setEditState(false);
   }
-  const likePost = (e) => {
-    setLikeState(!likeState);
+  const likePost = async (e) => {
     if (likeState) {
-      likes = 1;
-    } else {
-      likes = 0;
+      
+      await updateDoc(doc(db, "LikedPosts", user.uid), {
+          [key_id]: deleteField()
+      });
     }
+    else {
+      
+        await setDoc(doc(db, "LikedPosts", user.uid), {
+          [key_id]: true
+          
+        }, {merge: true});
+        
+    }
+    setLikeState(!likeState);
+  
   }
   return (
     <div className="flex flex-col ">
