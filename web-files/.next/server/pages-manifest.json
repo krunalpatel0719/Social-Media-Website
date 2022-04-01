@@ -2,7 +2,5 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/SettingsPage": "pages/SettingsPage.js",
-  "/CommentsPage": "pages/CommentsPage.js",
-  "/MainPage": "pages/MainPage.js"
+  "/SettingsPage": "pages/SettingsPage.js"
 }
