@@ -21,21 +21,29 @@ import {
   collection,
   query,
   where,
+  increment,
 } from "firebase/firestore";
 import { getStorage, ref, deleteObject } from "firebase/storage";
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useRef} from "react";
 
 import { Popover, Transition } from "@headlessui/react";
 import { usePopper } from "react-popper";
 
 function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
   const user = auth.currentUser;
+  
+  
 
+
+  const GoToComment = () =>{
+    window.location.href="/CommentsPage";
+  }
   let [referenceElement, setReferenceElement] = useState();
   let [popperElement, setPopperElement] = useState();
   let [newMessage, setNewMessage] = useState("");
-  let [editState, setEditState] = useState(false);
-  let [likeState, setLikeState] = useState(false);
+  const [editState, setEditState] = useState(false);
+  const [likeState, setLikeState] = useState(false);
+  
   let { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement: "bottom-end",
   });
@@ -66,34 +74,59 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
    
     setEditState(true);
   };
-  const updatePost = async (e) => {
+  const updatePost =  (e) => {
     e.preventDefault();
-    await updateDoc(doc(db, "Posts", key_id), {
+     updateDoc(doc(db, "Posts", key_id), {
       content: newMessage
     });
     setEditState(false);
   }
-  const likePost = async (e) => {
+  const likePost =  (e) => {
     if (likeState) {
       
-      await updateDoc(doc(db, "LikedPosts", user.uid), {
+       updateDoc(doc(db, "LikedPosts", user.uid), {
           [key_id]: deleteField()
+      });
+      const doc_ref = doc(db, "Posts", key_id)
+      
+         updateDoc(doc(db, "Posts", key_id), {
+        likes: increment(-1)
       });
     }
     else {
       
-        await setDoc(doc(db, "LikedPosts", user.uid), {
+         setDoc(doc(db, "LikedPosts", user.uid), {
           [key_id]: true
           
         }, {merge: true});
+      
         
+         updateDoc(doc(db, "Posts", key_id), {
+          likes: increment(1)
+        });
     }
     setLikeState(!likeState);
-  
+    
   }
+  useEffect(async () => {
+    const docRef = doc(db, "LikedPosts", user.uid);
+    const docSnap = await getDoc(docRef);
+   
+    if (docSnap.exists()) {
+      if (docSnap.data()[key_id]) {
+        setLikeState(true)
+        
+      }
+      else (
+        setLikeState(false)
+      )
+     
+    }
+  })
+  console.log(key_id + editState)
   return (
-    <div className="flex flex-col ">
-      <div className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">
+    <div   className="flex flex-col ">
+      <div  className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">
         <div className="flex items-center justify-between space-x-2">
           {/*<img className="rounded-full" src={image} width={40} height={40} />*/}
           <div>
@@ -204,7 +237,8 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
         </div>
 
         <div className="inputIcon p-3 rounded-none">
-          <ChatAltIcon className="h-4" />
+          <button onClick={GoToComment}><ChatAltIcon className="h-4" /></button>
+          
           <p className="text-xs sm:text-base">Comment</p>
         </div>
 
@@ -217,4 +251,4 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
   );
 }
 
-export default Post;
+export default Post
