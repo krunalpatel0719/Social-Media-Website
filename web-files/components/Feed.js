@@ -9,7 +9,7 @@ function Feed({ posts }) {
                 {/**Input Box */}
                 <InputBox />
                 {/**Posts */}
-                <Posts posts={posts} />
+                <Posts posts={"Shared"}/>
             </div>
         </div>
     )
