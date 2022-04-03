@@ -308,7 +308,7 @@ function SignUp({ onClose }) {
                       </div>
                     )}
                     <div className="flex flex-col h-48 justify-evenly ">
-                      {/*<Link href="/MainPage"> */}
+                     
                       <button
                         type="submit"
                         onClick={signupSubmit}

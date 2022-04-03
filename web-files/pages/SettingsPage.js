@@ -16,6 +16,7 @@ function SettingsPage({posts}) {
   const auth = getAuth();
   const router = useRouter()
   const [loaded, setLoaded] = useState(false)
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user=> {
       if (!user) {
