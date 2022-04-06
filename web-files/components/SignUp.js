@@ -136,7 +136,15 @@ function SignUp({ onClose }) {
       });
       return false;
       
-    } else if (usernameRegex.test(formData.username) == false) {
+    } 
+    else if (formData.username.length > 20) {
+      handleErrorMessage({
+        visible: true,
+        message: "Username can't be more than 20 characters",
+      });
+      return false;
+      
+    }else if (usernameRegex.test(formData.username) == false) {
       handleErrorMessage({
         visible: true,
         message: "Username has invalid character must only contain letters and numbers",

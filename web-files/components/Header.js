@@ -45,6 +45,7 @@ function Header() {
   const [username, setUsername] = React.useState(user && user.displayName);
 
   const setPageUsername = async () => {
+   
     const docRef = doc(db, "Users", user.uid);
     const docSnap = await getDoc(docRef);
     setUsername(docSnap.data().username);

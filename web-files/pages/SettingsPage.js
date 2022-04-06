@@ -11,7 +11,6 @@ import React, { useState, useEffect } from 'react';
 import { db } from "../firebase";
 import {collection, onSnapshot, getDocs,query, orderBy} from "firebase/firestore";
 import AccountInfo from '../components/AccountInfo.js'
-
 function SettingsPage({posts}) {
   const auth = getAuth();
   const router = useRouter()
