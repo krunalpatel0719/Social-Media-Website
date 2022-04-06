@@ -48,11 +48,11 @@ function AccountInfo({ posts }) {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [localGender, setLocalGender] = useState("");
-  
+  const [localBio, setLocalBio] = useState("");
   const initialSettingsData = {
-    bio: "",
-    age: "",
-    gender: "",
+    bio: "Edit bio here",
+    age: 18,
+    gender: "Male",
    
   };
 
@@ -64,6 +64,15 @@ function AccountInfo({ posts }) {
     const docRef = doc(db, "Users", user.uid);
     const docSnap = await getDoc(docRef);
     setLocalGender(docSnap.data().gender);
+    setLocalBio(docSnap.data().bio);
+    updateSettingsData({
+      ...settingsData,
+
+      // Trimming any whitespace
+      ['bio']: docSnap.data().bio,
+      ['age']: docSnap.data().age,
+      ['gender']: docSnap.data().gender,
+    });
   }, [])
   
  
@@ -80,9 +89,9 @@ function AccountInfo({ posts }) {
             setAge(data.data().age);
             setGender(data.data().gender);
             setUsername(data.data().username);
+            setBio(data.data().bio);
            
-           
-          //  updateSelectBio(data.data().gender);
+         
         }
         
     });
@@ -184,7 +193,7 @@ function AccountInfo({ posts }) {
               <span className="text-sm text-gray-600">Bio</span>
               <form onSubmit={e => { e.preventDefault()}} className="flex justify-between">
                 <input
-                  defaultValue={bio}
+                  defaultValue={localBio}
                   name="bio"
                   onChange={handleFormChange}
                   className=" font-medium pr-4 pl-1 text-md  py-1 rounded-lg  
