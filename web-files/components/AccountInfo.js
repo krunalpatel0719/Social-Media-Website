@@ -65,10 +65,14 @@ function AccountInfo({ posts }) {
     }
 
     return(
-        <div className="flex-grow  pb-44 pt-6 mr-4
+        <div className="flex-grow  pb-44 pt-16 mr-4
         xl:mr-40 overflow-y-auto ">
-            <div className="mx-auto max-w-md md:max-w-lg lg:max-w-2xl ">
-                <p className="font-large h-8">{name}</p>
+            
+            <div className=" font-sans border bg-white rounded-xl shadow-xl mx-auto max-w-md md:max-w-lg lg:max-w-xl ">
+            <div className="flex flex-col items-center p-2 text-grey-500 font-medium
+        mt-5">
+                
+                <p className="pb-3 font-large text-2xl ">{name}</p>
                 <p>{username}</p>
                 <p>profilepic? (maybe who knows?)</p>
                 <p className="font-medium">email: {email}</p>
@@ -93,6 +97,7 @@ function AccountInfo({ posts }) {
                 <p>delete account button (require confirmation)</p>
                 <button type="submit" /**onClick={deleteAccount} */>Yes</button>
             </div>
+        </div>
         </div>
     )
 }
