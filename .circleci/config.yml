@@ -16,6 +16,7 @@ jobs:
     executor: my-custom-executor
     steps:
       - checkout
+      - run: yarn --version
       - run: yarn run test
 
 workflows:
