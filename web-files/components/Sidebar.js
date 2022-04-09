@@ -6,14 +6,27 @@ import{
     UsersIcon,
 } from "@heroicons/react/solid";
 import SidebarRow from "./SidebarRow";
+import { auth, db } from "../firebase";
+import { useRouter } from "next/router";
+
 
 function Sidebar() {
+    const user = auth.currentUser;
+    const router = useRouter();
 
+    const GoToRequests = () => {
+        router.push("/FriendRequestsPage");
+    }
     return (
         <div className="p-2 mt-5 max-w-[600px] xl:min-w-[300px]">
             <SidebarRow Icon={UsersIcon} title="Friends"/>
-            <SidebarRow Icon={UserGroupIcon} title="Groups"/>
-
+            <button type="button" onClick={GoToRequests}>
+                {window.location.pathname == "/FriendRequestsPage" ? (
+                    <SidebarRow Icon={UserGroupIcon} title="Friend Requests"/>
+                ): (
+                    <SidebarRow Icon={UserGroupIcon} title="Friend Requests"/>
+                )}
+            </button>
         </div>
     );
 }

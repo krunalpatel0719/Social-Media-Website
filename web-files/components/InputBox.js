@@ -48,6 +48,11 @@ function InputBox() {
             timestamp: serverTimestamp(),
             likes: 0,
         }).then( doc2 =>{
+            const storageRef = ref(storage, `Posts/${doc2.id}`);
+            setDoc(doc(db, "Posts", doc2.id), {
+                doc_id: doc2.id
+            }, {merge: true})
+
             if(imageToPost){
                 const storageRef = ref(storage, `Posts/${doc2.id}`);
                 const uploadTask = uploadString(storageRef, imageToPost, 'data_url');

@@ -42,6 +42,10 @@ function Header() {
     router.push("/MainPage");
   };
 
+  const GoToShared = () => {
+      router.push("/Shared");
+  }
+
   const [username, setUsername] = React.useState(user && user.displayName);
 
   const setPageUsername = async () => {
@@ -82,7 +86,14 @@ function Header() {
             )}
           </button>
           <HeaderIcon Icon={FlagIcon} />
-          <HeaderIcon Icon={UserGroupIcon} />
+
+          <button type="button" onClick={GoToShared}>
+              {window.location.pathname == "/Shared" ? (
+                  <HeaderIcon Icon={UserGroupIcon} />
+            ) : (
+                <HeaderIcon Icon={UserGroupIcon} />
+            )}
+          </button>
         </div>
       </div>
 

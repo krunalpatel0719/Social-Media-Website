@@ -28,15 +28,26 @@ import React, { useState, useEffect, useRef} from "react";
 
 import { Popover, Transition } from "@headlessui/react";
 import { usePopper } from "react-popper";
+import { useRouter } from 'next/router'
+
+
 
 function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
+  const router = useRouter();
   const user = auth.currentUser;
   
   
+  const GoToComment = () => {
+    router.push({
+      pathname: `/CommentsPage`,
+      query: { post_id: key_id }
+    });
+  }
 
-
-  const GoToComment = () =>{
-    window.location.href="/CommentsPage";
+  const sendFriendRequest = () => {
+    setDoc(doc(db, "FriendRequests", uid), {
+      [user.uid]:true
+    })
   }
   let [referenceElement, setReferenceElement] = useState();
   let [popperElement, setPopperElement] = useState();
@@ -131,6 +142,7 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
           {/*<img className="rounded-full" src={image} width={40} height={40} />*/}
           <div>
             <p className="font-medium">{name}</p>
+            <button type="button" className="inline-flex" onClick={sendFriendRequest}>+</button>
             {timestamp ? (
               <p className="text-xs text-gray-400">
                 {new Date(timestamp?.toDate()).toLocaleString()}
@@ -237,9 +249,10 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
         </div>
 
         <div className="inputIcon p-3 rounded-none">
-          <button onClick={GoToComment}><ChatAltIcon className="h-4" /></button>
-          
-          <p className="text-xs sm:text-base">Comment</p>
+        <button onClick={GoToComment} className="inputIcon p-3 rounded-none">
+            <ChatAltIcon className="h-4" />
+            <p className="text-xs sm:text-base">Comment</p>
+          </button>
         </div>
 
         <div className="inputIcon p-3 rounded-none rounded-br-2xl">
