@@ -123,7 +123,7 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
      
     }
   })
-  console.log(key_id + editState)
+  
   return (
     <div   className="flex flex-col ">
       <div  className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">

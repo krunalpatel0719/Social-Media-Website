@@ -40,7 +40,7 @@ function SignUp({ onClose }) {
   });
 
   const [errorMessage, setErrorMessage] = React.useState({
-    showError: false,
+    showError: true,
     value: "",
   });
 
@@ -224,10 +224,10 @@ function SignUp({ onClose }) {
           <div className="relative flex flex-wrap">
             <div className="">
               <div className="">
-                <div className="font-bold font-poppins pb-6 text-center text-4xl text-black">
+                <div data-testid='create' className="font-bold font-poppins pb-6 text-center text-4xl text-black">
                   Create an Account
                 </div>
-                <form id="signup-form" className="">
+                <form role='signup-form' id="signup-form" className="">
                   <div className="form-group mx-auto max-w-lg">
                     <span className=" text-sm text-gray-600">First Name</span>
 
@@ -273,6 +273,7 @@ function SignUp({ onClose }) {
                       <span className="text-sm text-gray-600">Email</span>
                       <div className="flex relative items-center">
                         <input
+                          role='email-input'
                           name="email"
                           onChange={handleFormChange}
                           placeholder="Enter Email"
@@ -308,9 +309,14 @@ function SignUp({ onClose }) {
                         </button>
                       </div>
                     </div>
+                    {/* <div  data-testid = 'error-message' className="pl-1 w-80 mt-1 text-m text-red-500">
+                       <p>
+                       {errorMessage.value}
+                       </p>
+                     </div> */}
                     {errorMessage.showError && (
-                      <div className="pl-1 w-80 mt-1 text-m text-red-500">
-                      
+                      <div  data-testid = 'error-message' className="pl-1 w-80 mt-1 text-m text-red-500">
+                       
                         {errorMessage.value}
                         
                       </div>
@@ -318,6 +324,7 @@ function SignUp({ onClose }) {
                     <div className="flex flex-col h-48 justify-evenly ">
                      
                       <button
+                        data-testid='signup-submit'
                         type="submit"
                         onClick={signupSubmit}
                         className="text-lg font-semibold text-centered w-full text-white rounded-full px-6 py-3 block shadow-xl
