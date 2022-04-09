@@ -31,6 +31,9 @@ import { useRouter } from 'next/router'
 
 function Comment({ doc_id, origin_DocID, username, content, uid, timestamp }) {
 
+    // Renders a comment and it's functions
+
+    // Sets the state and variables of the comment component
     const router = useRouter();
     const user = auth.currentUser;
 
@@ -42,11 +45,14 @@ function Comment({ doc_id, origin_DocID, username, content, uid, timestamp }) {
         placement: "bottom-end",
     });
 
+    // Handles the edit of a comment 
+
     const handleMessageChange = (e) => {
 
         let target_value = e.target.value;
         setNewMessage(target_value);
     }
+    // Delete/Update/Edit functions for the comment 
     const deleteComment = async (e) => {
         setEditState(false);
         await deleteDoc(doc(db, "Comments",  doc_id));

@@ -24,6 +24,8 @@ import Comment_InputBox from "../components/Comment_InputBox";
 import Comments from "../components/Comments";
 
 
+// Loads the comments page and components
+
 function CommentsPage({ comments }) {
 
   var postOriginID= "";

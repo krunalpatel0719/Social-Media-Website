@@ -12,6 +12,9 @@ import { db } from "../firebase";
 import {collection, onSnapshot, getDocs,query, orderBy} from "firebase/firestore";
 import AccountInfo from '../components/AccountInfo.js'
 
+
+// Loads the settings page when they are on it 
+
 function SettingsPage({posts}) {
   const auth = getAuth();
   const router = useRouter()

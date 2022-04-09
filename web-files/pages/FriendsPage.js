@@ -13,6 +13,8 @@ import {collection, onSnapshot, getDocs,query, orderBy} from "firebase/firestore
 import AccountInfo from '../components/AccountInfo.js';
 import SharedPosts from '../components/SharedPosts.js'
 
+// Loads the friends page and components 
+
 function FriendsPage({posts}) {
   const auth = getAuth();
   const router = useRouter()
