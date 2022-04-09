@@ -21,6 +21,8 @@ import SignUp from './SignUp';
 function Login(props) {
   const router = useRouter()
 
+  // Creates the variables and states 
+
   const initialFormData = Object.freeze({
     email: "",
     password: "",
@@ -39,6 +41,7 @@ function Login(props) {
 
   const [formData, updateFormData] = React.useState(initialFormData);
 
+  // Handles the reveal/hide password
   const handleClickShowPassword = (e) => {
     e.preventDefault();
     setPasswordShown({
@@ -46,6 +49,9 @@ function Login(props) {
       showPassword: !passwordShown.showPassword,
     });
   };
+
+  // Handles the form input change  
+
   const handleFormChange = (e) => {
     updateFormData({
       ...formData,
@@ -55,12 +61,16 @@ function Login(props) {
     });
   };
 
+  // Handles the error message 
+
   const handleErrorMessage = (e) => {
     setErrorMessage({
       showError: e.visible,
       value: e.message
     })
   }
+  // Submit button for the login does the validation checks and then if the credentials are correct logs the user in 
+  
   const loginSubmit = (e) => {
     
     e.preventDefault();

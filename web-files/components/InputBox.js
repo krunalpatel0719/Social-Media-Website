@@ -15,6 +15,9 @@ import SendIcon from '@material-ui/icons/Send';
 
 
 function InputBox() {
+
+    // Creates the variables and states for the input box 
+
     const auth = getAuth();
     const db = getFirestore();
     const storage = getStorage();
@@ -24,7 +27,8 @@ function InputBox() {
     const [imageToPost, setImageToPost] = useState(null);
 
     const [username, setUsername] = useState(user && (user.displayName));
-        
+    
+
     const setPageUsername = async () => {
         const docRef = doc(db, "Users", user.uid);
         const docSnap = await getDoc(docRef);
@@ -32,6 +36,8 @@ function InputBox() {
     }
     
     setPageUsername()
+
+    // Send post function where it sends the data to the firebase 
 
     const sendPost = (e) => {
         e.preventDefault();
@@ -109,6 +115,8 @@ function InputBox() {
         });*/
         inputRef.current.value="";
     };
+
+    // Adds/removes an image to a post 
 
     const addImageToPost = (e)=>{
         const reader = new FileReader();

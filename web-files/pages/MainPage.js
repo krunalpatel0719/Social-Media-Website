@@ -12,6 +12,9 @@ import { db } from "../firebase";
 import {collection, onSnapshot, getDocs,query, orderBy} from "firebase/firestore";
 
 
+// Loads the main page with the feed
+
+
 function MainPage({posts}) {
   const auth = getAuth();
   const router = useRouter()

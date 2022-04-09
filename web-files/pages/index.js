@@ -20,7 +20,7 @@ import "../firebase";
 import { getStorage, ref, getDownloadURL, uploadString, UploadTask} from "firebase/storage";
 import { useRouter } from 'next/router'
 
-
+// Index page where it redirects if they are logged in or logged out to the specific page
 
 
 function Home() {

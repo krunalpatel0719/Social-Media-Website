@@ -20,11 +20,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/CommentsPage.js"
     ],
-    "/FriendRequestsPage": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/FriendRequestsPage.js"
-    ],
     "/MainPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

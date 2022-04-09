@@ -1,5 +1,8 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
+
+// Loads the page where portals are rendered 
+
 export default class MyDocument extends Document {
   render() {
     return (

@@ -5,6 +5,9 @@ import {collection, query, orderBy} from "firebase/firestore";
 
 
  function SharedPosts() {
+
+  // Shared Post component loads them in
+
      const [realtimePosts, loading, error] =  useCollection(
      query(collection(db, "Posts"), orderBy("timestamp", "desc"))
   );

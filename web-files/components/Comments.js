@@ -4,6 +4,8 @@ import Comment from "./Comment";
 import {collection, query, orderBy,where} from "firebase/firestore";
  function Comments(originID) {
 
+    // Renders the comments in the comment page in real time
+
      const origin_id = originID.post_originID
      const [realtimePosts, loading, error] =  useCollection(
      query(collection(db, "Comments"),where("origin_docID", "==", origin_id))
