@@ -16,8 +16,6 @@ jobs:
     executor: my-custom-executor
     steps:
       - checkout
-      - run: npm install
-      - run: npm install yarn
       - run: yarn run test
 
 workflows:
