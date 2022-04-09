@@ -128,11 +128,7 @@
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
-<<<<<<< HEAD
-/******/ 		__webpack_require__.h = function() { return "18e334618909fdfe"; }
-=======
-/******/ 		__webpack_require__.h = function() { return "2bb466f1af0eb4a5"; }
->>>>>>> origin/KrunalsTestBranch
+/******/ 		__webpack_require__.h = function() { return "e23256106fdd14d8"; }
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
