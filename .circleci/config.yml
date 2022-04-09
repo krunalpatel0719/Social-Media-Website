@@ -14,8 +14,7 @@ jobs:
     executor: my-custom-executor
     steps:
       - checkout
-      - run: |
-          # echo Hello, World!
+      - run: yarn run test
 
 workflows:
   my-custom-workflow:
