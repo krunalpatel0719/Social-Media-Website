@@ -8,7 +8,7 @@ executors:
           # visit app.circleci.com/settings/project/github/Intro-to-SE-lab-Spring-22/Group-2/environment-variables
           username: $DOCKER_HUB_USER
           password: $DOCKER_HUB_PASSWORD
-      
+      - image: circleci/postgres:16.14.2
         
 jobs:
   test-job:
