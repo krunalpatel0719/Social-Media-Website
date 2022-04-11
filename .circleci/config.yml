@@ -22,7 +22,7 @@ jobs:
       - node/install:
           install-yarn: true
           node-version: '16.13'
-      - run: yarn test
+      - run: echo "$working_directory" 
 workflows:
   my-custom-workflow:
     jobs:
