@@ -56,16 +56,18 @@ function Header() {
   // Sets the username on the page 
   
   const setPageUsername = async () => {
-   
+   if (user) {
     const docRef = doc(db, "Users", user.uid);
     const docSnap = await getDoc(docRef);
     setUsername(docSnap.data().username);
+   }
   };
 
   setPageUsername();
 
   return (
     <div
+      role = 'header'
       className="sticky top-0 z-50 bg-white flex items-center
         p-2 lg:px-5 shadow-md"
     >
@@ -117,7 +119,9 @@ function Header() {
         {/**{user.email}</p> */}
         <p className="flex whitespace-nowrap font-semibold pr-3">{username} </p>
         <ViewGridIcon className="icon" />
-        <CogIcon className="icon" onClick={GoToAccount} />
+        <button data-testid='settings-button' type="button" onClick={GoToAccount}>
+         <CogIcon  className="icon" />
+        </button>
         <BellIcon className="icon" />
         <button type="button" onClick={handleLogOut}>
           <LogoutIcon className="icon" />
