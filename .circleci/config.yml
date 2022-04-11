@@ -19,8 +19,6 @@ jobs:
     executor: my-custom-executor
     steps:
       - checkout
-      - node/install-yarn:
-          version: 1.22.17
       - run: yarn test
 
 workflows:
