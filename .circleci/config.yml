@@ -24,7 +24,6 @@ jobs:
           node-version: 12.16.2
       - node/install-yarn:
           version: 1.22.4
-      - run: yarn --version
       - run: yarn test
 
 workflows:
