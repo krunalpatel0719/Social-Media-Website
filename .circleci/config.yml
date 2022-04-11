@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.2
 
+working_directory: ~/Group-2/web-files
 executors:
   my-custom-executor:
     docker:
@@ -16,9 +17,9 @@ executors:
 jobs:
   test-job:
     executor: my-custom-executor
-    working_directory: ~/Group-2/web-files
     steps:
-      - checkout
+      - checkout:
+          path: ~/Group-2
       - node/install:
           install-yarn: true
           node-version: '16.13'
