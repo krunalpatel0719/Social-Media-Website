@@ -22,7 +22,7 @@ jobs:
       - node/install:
           install-yarn: true
           node-version: '16.13'
-      - run: yarn test-jest
+      - run: yarn --version
 workflows:
   my-custom-workflow:
     jobs:
