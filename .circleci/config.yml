@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.2
 
+working_directory: ~/web-files
 executors:
   my-custom-executor:
     docker:
