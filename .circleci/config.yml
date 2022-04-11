@@ -1,4 +1,7 @@
 version: 2.1
+
+orbs:
+  node: circleci/node@2.1.1
 executors:
   my-custom-executor:
     docker:
@@ -16,6 +19,11 @@ jobs:
     executor: my-custom-executor
     steps:
       - checkout
+      - node/install:
+          install-npm: false
+          node-version: 12.16.2
+      - node/install-yarn:
+          version: 1.22.4
       - run: yarn --version
       - run: yarn test
 
