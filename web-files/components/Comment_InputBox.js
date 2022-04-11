@@ -15,6 +15,9 @@ import SendIcon from '@material-ui/icons/Send';
 import { usePopper } from "react-popper";
 
 function Comment_IputBox(props) {
+
+    // Renders the input box for the comment page 
+    
     const auth = getAuth();
     const db = getFirestore();
     const storage = getStorage();

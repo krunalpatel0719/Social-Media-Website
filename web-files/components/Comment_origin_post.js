@@ -32,6 +32,8 @@ import { useRouter } from 'next/router'
 
 function Post({ key_id, name, message, uid, postImage, timestamp, likes }) {
   
+  // Loads the original post for the comment 
+
   const router = useRouter();
   const user = auth.currentUser;
   const GoToComment = () => {
@@ -48,6 +50,8 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes }) {
   let { styles, attributes } = usePopper(referenceElement, popperElement, {
     placement: "bottom-end",
   });
+
+  
 
   const handleMessageChange = (e) => {
 
@@ -71,6 +75,8 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes }) {
     });
 
   };
+
+  
   const editPost = (e) => {
 
     setEditState(true);

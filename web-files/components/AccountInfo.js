@@ -34,6 +34,9 @@ function AccountInfo({ posts }) {
   const auth = getAuth();
   const user = auth.currentUser;
  
+
+  // States for all the settings info such as bio, username, age, email, gender, etc
+
   const [isOpen, setIsOpen] = useState(false)
   
 
@@ -58,7 +61,7 @@ function AccountInfo({ posts }) {
 
   const [settingsData, updateSettingsData] = useState(initialSettingsData);
 
-  
+  // Updates the variables when the page mounts
   
   useEffect(async () => {
     const docRef = doc(db, "Users", user.uid);
@@ -98,6 +101,8 @@ function AccountInfo({ posts }) {
     
     
   });
+
+  // Handlers for the input change and sets the variables to that
  
   const handleGenderChange = (e) => { 
     let target_value = e.target.value.trim();
@@ -122,6 +127,8 @@ function AccountInfo({ posts }) {
    
   };
 
+  // Updates the firebase to the input of the variables 
+  
   const updateBio = (e) => {
     e.preventDefault();
     updateDoc(doc(db, "Users", uid), {

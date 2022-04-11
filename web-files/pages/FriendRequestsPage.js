@@ -13,6 +13,7 @@ import {collection, onSnapshot, getDocs,query, orderBy} from "firebase/firestore
 import AccountInfo from '../components/AccountInfo.js';
 import Requests from '../components/Requests.js'
 
+// Loads the friends requests page and components
 
 function FriendRequestsPage({posts}) {
   const auth = getAuth();

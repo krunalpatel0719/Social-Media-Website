@@ -8,6 +8,9 @@ import {useState, useEffect} from "react";
 
 
 function Requests({ posts }) {
+
+    // Handles the requests for friends 
+    
     const user = auth.currentUser;
     var target = false;
     //let code = ``;

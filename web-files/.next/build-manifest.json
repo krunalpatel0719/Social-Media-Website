@@ -20,10 +20,17 @@
       "static/chunks/main.js",
       "static/chunks/pages/index.js"
     ],
+<<<<<<< HEAD
     "/FriendRequestsPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/FriendRequestsPage.js"
+=======
+    "/MainPage": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/MainPage.js"
+>>>>>>> main
     ],
     "/_app": [
       "static/chunks/webpack.js",

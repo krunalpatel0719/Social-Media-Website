@@ -28,8 +28,13 @@ import {
 import { doc, getDoc } from "firebase/firestore";
 
 function Header() {
+  // Variables and states for the header 
+
   const user = auth.currentUser;
   const router = useRouter();
+
+  // Header button functions 
+
   const handleLogOut = (e) => {
     signOut(auth);
   };
@@ -48,7 +53,10 @@ function Header() {
 
   const [username, setUsername] = React.useState(user && user.displayName);
 
+  // Sets the username on the page 
+  
   const setPageUsername = async () => {
+   
     const docRef = doc(db, "Users", user.uid);
     const docSnap = await getDoc(docRef);
     if(docSnap){

@@ -35,8 +35,10 @@ import { useRouter } from 'next/router'
 function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
   const router = useRouter();
   const user = auth.currentUser;
+  // Creates the post content 
   
-  
+  // Redirects to comment page 
+
   const GoToComment = () => {
     router.push({
       pathname: `/CommentsPage`,
@@ -44,11 +46,16 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
     });
   }
 
+  // Sends a friend request 
+
   const sendFriendRequest = () => {
     setDoc(doc(db, "FriendRequests", uid), {
       [user.uid]:true
     })
   }
+
+  // React states for the post 
+
   let [referenceElement, setReferenceElement] = useState();
   let [popperElement, setPopperElement] = useState();
   let [newMessage, setNewMessage] = useState("");
@@ -59,11 +66,16 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
     placement: "bottom-end",
   });
 
+  // Handles when the message changes for the post 
+
   const handleMessageChange = (e) => {
     
     let target_value = e.target.value;
     setNewMessage(target_value);
   }
+
+  // Deletes post 
+
   const deletePost = async (e) => {
     setEditState(false);
     await deleteDoc(doc(db, "Posts", key_id));
@@ -81,10 +93,15 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
     });
 
   };
+
+  // Edits, updates, and like post functions 
+
   const editPost = (e) => {
    
     setEditState(true);
   };
+
+  
   const updatePost =  (e) => {
     e.preventDefault();
      updateDoc(doc(db, "Posts", key_id), {
@@ -119,6 +136,8 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
     setLikeState(!likeState);
     
   }
+  // Loads in the like state when the page renders 
+  
   useEffect(async () => {
     const docRef = doc(db, "LikedPosts", user.uid);
     const docSnap = await getDoc(docRef);
@@ -134,7 +153,7 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
      
     }
   })
-  console.log(key_id + editState)
+  
   return (
     <div   className="flex flex-col ">
       <div  className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">
