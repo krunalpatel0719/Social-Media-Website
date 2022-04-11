@@ -15,20 +15,15 @@
     "static/development/_middlewareManifest.js"
   ],
   "pages": {
-    "/CommentsPage": [
+    "/": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/CommentsPage.js"
+      "static/chunks/pages/index.js"
     ],
     "/FriendRequestsPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/FriendRequestsPage.js"
-    ],
-    "/MainPage": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/MainPage.js"
     ],
     "/_app": [
       "static/chunks/webpack.js",
