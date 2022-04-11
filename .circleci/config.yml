@@ -3,7 +3,6 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.2
 
-working_directory: ~/web-files
 executors:
   my-custom-executor:
     docker:
@@ -17,12 +16,13 @@ executors:
 jobs:
   test-job:
     executor: my-custom-executor
+    working_directory: ~/web-files
     steps:
       - checkout
       - node/install:
           install-yarn: true
           node-version: '16.13'
-      - run: yarn jest
+      - run: yarn test
 workflows:
   my-custom-workflow:
     jobs:
