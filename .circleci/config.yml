@@ -17,13 +17,14 @@ jobs:
   test-job:
     executor: my-custom-executor
     steps:
-      - checkout
+      - checkout:
+          path: ~/web-files
       - node/install:
           install-yarn: true
           node-version: '16.13'
       - run:
           name: "What branch am I on now?"
-          command: echo $WORKING_DIRECTORY
+          command: echo $CIRCLE_WORKING_DIRECTORY
 workflows:
   my-custom-workflow:
     jobs:
