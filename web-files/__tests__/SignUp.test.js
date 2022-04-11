@@ -2,7 +2,9 @@ import React from 'react';
 
 import "@testing-library/jest-dom";
 import '@testing-library/jest-dom/extend-expect';
-import {waitFor, fireEvent, render, screen } from "@testing-library/react";
+import '@testing-library/dom'
+import userEvent from '@testing-library/user-event'
+import {waitFor,  fireEvent, render, screen } from "@testing-library/react";
 
 
 
@@ -19,7 +21,9 @@ describe('Signup', () => {
    
     expect(form).toBeInTheDocument();
   })
-  it('Valid signup input', async () => {
+  it('Empty signup input check', async () => {
+    const user = userEvent.setup()
+
     render(<SignUp />)
     
     const email = screen.getByRole('email-input')
@@ -27,7 +31,7 @@ describe('Signup', () => {
     const error = screen.getByTestId("error-message");
     //fireEvent.change(email, { target: { value: 'testgmail.com'} });
     
-    fireEvent.click(signup);
+    user.click(signup);
     //expect(error).toHaveTextContent("Invalid email please include an @");
     // await waitFor(() => {
         

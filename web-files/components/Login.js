@@ -35,7 +35,7 @@ function Login(props) {
   });
 
   const [errorMessage, setErrorMessage] = React.useState({
-    showError: false,
+    showError: true,
     value: "",
   });
 
@@ -110,7 +110,7 @@ function Login(props) {
 
   useEffect(() => {
     
-    router.prefetch('/MainPage')
+    //router.prefetch('/MainPage')
   }, [])
 
   return (
@@ -122,7 +122,7 @@ function Login(props) {
               <div className="font-bold font-poppins pb-6 text-center text-4xl text-black">
                 Login to the Lounge
               </div>
-              <form id="login-form" className="">
+              <form role ='login-form' id="login-form" className="">
                 <div className="mx-auto max-w-lg">
                   <span className="px-2 text-sm text-gray-600">Email</span>
 
@@ -170,11 +170,12 @@ function Login(props) {
                     </div>
                   </div>
                   {errorMessage.showError &&
-                    <div className="pl-1 mt-1 text-m text-red-500"> {errorMessage.value} </div>
+                    <div data-testid = 'error-message' className="pl-1 mt-1 text-m text-red-500"> {errorMessage.value} </div>
                   }
                   <div className="pt-8">
                     {/*<Link href="/MainPage"> */}
                     <button
+                      role="login-submit"
                       onClick={loginSubmit}
                       className="mt-3 text-lg font-semibold text-centered w-full text-white rounded-full px-6 py-3 block shadow-xl
                           transition ease-in-out  bg-blue-600 hover:bg-blue-500 duration-400"

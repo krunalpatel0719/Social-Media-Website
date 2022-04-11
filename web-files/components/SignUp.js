@@ -15,15 +15,23 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { auth, db} from "../firebase";
+import { auth, db } from "../firebase";
 import { useRouter } from "next/router";
 
-import { doc, addDoc, setDoc, getDoc, getDocs, getFirestore, collection, query, where} from "firebase/firestore";
-
+import {
+  doc,
+  addDoc,
+  setDoc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 
 function SignUp({ onClose }) {
- 
-  // Variables and hooks 
+  // Variables and hooks
 
   const initialFormData = Object.freeze({
     first_name: "",
@@ -44,7 +52,7 @@ function SignUp({ onClose }) {
     value: "",
   });
 
-  // Password show/hide handler 
+  // Password show/hide handler
 
   const handleClickShowPassword = (e) => {
     e.preventDefault();
@@ -54,7 +62,7 @@ function SignUp({ onClose }) {
     });
   };
 
-  // Handles and sets the variables that correspond to the form input 
+  // Handles and sets the variables that correspond to the form input
 
   const handleFormChange = (e) => {
     let target_value = e.target.value.trim();
@@ -79,12 +87,11 @@ function SignUp({ onClose }) {
   // Sets Users in the database and adds in user's info
 
   const setDocument = async (cred) => {
-    await setDoc(doc(db, "Users", cred.user.uid), {
+    await setDoc(doc(db, "Users", (cred && cred.user && cred.user.uid)), {
       first_name: formData.first_name,
       last_name: formData.last_name,
       username: formData.username,
       email: formData.email,
-      
     });
   };
 
@@ -95,37 +102,10 @@ function SignUp({ onClose }) {
     });
   };
 
-  // Signup submition function 
+  // Signup submition function
 
-  const signupSubmit = async (e) => {
-    e.preventDefault();
-    
-
+  const basicValidation = () => {
     const usernameRegex = /^[a-zA-Z0-9]+$/;
-    let usernameTaken = false;
-
-    // Username already exists check
-
-    const docRef = collection(db, "Users");
-    const q = query(docRef, where("username", "==", formData.username));
-    await getDocs(q).then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        if (doc.data()) {
-          usernameTaken = true;
-        
-        }
-      });
-
-    });
-    
-    // Basic validation checks and create account with firebase function
-
-    if (usernameTaken == true) {
-      handleErrorMessage({visible: true, message: "Username already exists please choose a new one"});
-      return false;
-    }
-  
     if (formData.username.length <= 0) {
       handleErrorMessage({ visible: true, message: "Username can't be empty" });
       return false;
@@ -135,23 +115,20 @@ function SignUp({ onClose }) {
         message: "Username can't be less than 6 characters",
       });
       return false;
-      
-    } 
-    else if (formData.username.length > 20) {
+    } else if (formData.username.length > 20) {
       handleErrorMessage({
         visible: true,
         message: "Username can't be more than 20 characters",
       });
       return false;
-      
-    }else if (usernameRegex.test(formData.username) == false) {
+    } else if (usernameRegex.test(formData.username) == false) {
       handleErrorMessage({
         visible: true,
-        message: "Username has invalid character must only contain letters and numbers",
+        message:
+          "Username has invalid character must only contain letters and numbers",
       });
-     
-    } 
-    else if (formData.first_name.length <= 0) {
+      return false;
+    } else if (formData.first_name.length <= 0) {
       handleErrorMessage({
         visible: true,
         message: "First name can't be empty",
@@ -163,58 +140,93 @@ function SignUp({ onClose }) {
         message: "Last name can't be empty",
       });
       return false;
-    } else {
-      createUserWithEmailAndPassword(auth, formData.email, formData.password)
-        .then((cred) => {
-          setDocument(cred)
-            .then(() => {
-              handleErrorMessage({ visible: false, message: "" });
-              updateProfile(cred.user, {
-                displayName: formData.username
-              }).then(() => {}).catch((err) => {console.log(err)})
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        })
-        .catch((error) => {
-          const errorCode = error.code;
+    }
+    return true;
+  };
 
-          switch (errorCode) {
-            case "auth/weak-password":
-              handleErrorMessage({
-                visible: true,
-                message: "Password is too weak please make it stronger",
-              });
-              break;
-            case "auth/email-already-in-use":
-              handleErrorMessage({
-                visible: true,
-                message: "Email already in use please try again",
-              });
-              break;
-            case "auth/invalid-email":
-              handleErrorMessage({
-                visible: true,
-                message: "Invalid email please include an @",
-              });
-              break;
-            case "auth/maximum-user-count-exceeded":
-              handleErrorMessage({
-                visible: true,
-                message:
-                  "Maximum signup attempts exceeded please try again later",
-              });
-              break;
-            case "auth/too-many-requests":
-              handleErrorMessage({
-                visible: true,
-                message: "Too many signup attempts please try again later",
-              });
-              break;
-            default:
+  const signupSubmit = async (e) => {
+    e.preventDefault();
+
+    let usernameTaken = false;
+
+    // Username already exists check
+
+    // Basic validation checks and create account with firebase function
+
+    if (basicValidation()) {
+      const docRef = collection(db, "Users");
+      const q = query(docRef, where("username", "==", formData.username));
+      await getDocs(q).then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          if (doc.data()) {
+            usernameTaken = true;
           }
         });
+      });
+      if (usernameTaken == true) {
+        handleErrorMessage({
+          visible: true,
+          message: "Username already exists please choose a new one",
+        });
+        return false;
+      } else {
+        createUserWithEmailAndPassword(auth, formData.email, formData.password)
+          .then((cred) => {
+            setDocument(cred)
+              .then(() => {
+                handleErrorMessage({ visible: false, message: "" });
+                updateProfile(cred.user, {
+                  displayName: formData.username,
+                })
+                  .then(() => {})
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+
+            switch (errorCode) {
+              case "auth/weak-password":
+                handleErrorMessage({
+                  visible: true,
+                  message: "Password is too weak please make it stronger",
+                });
+                break;
+              case "auth/email-already-in-use":
+                handleErrorMessage({
+                  visible: true,
+                  message: "Email already in use please try again",
+                });
+                break;
+              case "auth/invalid-email":
+                handleErrorMessage({
+                  visible: true,
+                  message: "Invalid email please include an @",
+                });
+                break;
+              case "auth/maximum-user-count-exceeded":
+                handleErrorMessage({
+                  visible: true,
+                  message:
+                    "Maximum signup attempts exceeded please try again later",
+                });
+                break;
+              case "auth/too-many-requests":
+                handleErrorMessage({
+                  visible: true,
+                  message: "Too many signup attempts please try again later",
+                });
+                break;
+              default:
+            }
+          });
+      }
     }
   };
   return (
@@ -224,10 +236,13 @@ function SignUp({ onClose }) {
           <div className="relative flex flex-wrap">
             <div className="">
               <div className="">
-                <div data-testid='create' className="font-bold font-poppins pb-6 text-center text-4xl text-black">
+                <div
+                  data-testid="create"
+                  className="font-bold font-poppins pb-6 text-center text-4xl text-black"
+                >
                   Create an Account
                 </div>
-                <form role='signup-form' id="signup-form" className="">
+                <form role="signup-form" id="signup-form" className="">
                   <div className="form-group mx-auto max-w-lg">
                     <span className=" text-sm text-gray-600">First Name</span>
 
@@ -273,7 +288,7 @@ function SignUp({ onClose }) {
                       <span className="text-sm text-gray-600">Email</span>
                       <div className="flex relative items-center">
                         <input
-                          role='email-input'
+                          role="email-input"
                           name="email"
                           onChange={handleFormChange}
                           placeholder="Enter Email"
@@ -309,11 +324,9 @@ function SignUp({ onClose }) {
                         </button>
                       </div>
                     </div>
-                    {/* <div  data-testid = 'error-message' className="pl-1 w-80 mt-1 text-m text-red-500">
-                       <p>
-                       {errorMessage.value}
-                       </p>
-                     </div> */}
+                    {/* <div className="pl-1 w-80 mt-1 text-m text-red-500">
+                      <p data-testid="error-message">{errorMessage.value}</p>
+                    </div> */}
                     {errorMessage.showError && (
                       <div  data-testid = 'error-message' className="pl-1 w-80 mt-1 text-m text-red-500">
                        
@@ -322,9 +335,8 @@ function SignUp({ onClose }) {
                       </div>
                     )}
                     <div className="flex flex-col h-48 justify-evenly ">
-                     
                       <button
-                        data-testid='signup-submit'
+                        data-testid="signup-submit"
                         type="submit"
                         onClick={signupSubmit}
                         className="text-lg font-semibold text-centered w-full text-white rounded-full px-6 py-3 block shadow-xl
