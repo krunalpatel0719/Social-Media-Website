@@ -16,7 +16,7 @@ executors:
 jobs:
   test-job:
     executor: my-custom-executor
-    working_directory: ~/web-files
+    working_directory: ~/Group-2/web-files
     steps:
       - checkout
       - node/install:
