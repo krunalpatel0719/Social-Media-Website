@@ -51,9 +51,10 @@ describe('Header', () => {
    
     await waitFor(() => {
       result.current.push("/SettingsPage");
-    });
+    })
+    await waitFor(() => {
     expect(result.current).toMatchObject({ asPath: "/SettingsPage"})
-
+  });
   })
   
  
