@@ -1,9 +1,10 @@
-version: 2
+version: 2.1
+
 orbs:
   node: circleci/node@5.0.2
-jobs:
-  build:
-    working_directory: ~/web-files
+
+executors:
+  my-custom-executor:
     docker:
       - image: cimg/base:stable
         auth:
@@ -12,9 +13,18 @@ jobs:
           username: $DOCKER_HUB_USER
           password: $DOCKER_HUB_PASSWORD
       - image: cimg/node:16.14.2
+jobs:
+  test-job:
+    executor: my-custom-executor
     steps:
       - checkout
       - node/install:
           install-yarn: true
           node-version: '16.13'
-      - run: yarn test
+      - run:
+          name: "What branch am I on now?"
+          command: echo $CIRCLE_BRANCH
+workflows:
+  my-custom-workflow:
+    jobs:
+      - test-job
