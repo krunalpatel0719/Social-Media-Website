@@ -24,7 +24,11 @@ jobs:
           node-version: '16.13'
       - run:
           name: "What branch am I on now?"
-          command: echo $CIRCLE_WORKING_DIRECTORY
+          command: cd web-files
+      - run:
+          name: "Where da majic happens"
+          command: yarn test
+
 workflows:
   my-custom-workflow:
     jobs:
