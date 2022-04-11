@@ -6,7 +6,12 @@ orbs:
 executors:
   my-custom-executor:
     docker:
-      - image: cimg/node:17.9.0
+      - image: cimg/base:stable
+        auth:
+          # ensure you have first added these secrets
+          # visit app.circleci.com/settings/project/github/Intro-to-SE-lab-Spring-22/Group-2/environment-variables
+          username: $DOCKER_HUB_USER
+          password: $DOCKER_HUB_PASSWORD
 jobs:
   test-job:
 
