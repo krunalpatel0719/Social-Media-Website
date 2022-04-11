@@ -23,7 +23,7 @@ jobs:
           node-version: '16.13'
       - run:
           name: "What branch am I on now?"
-          command: echo $CIRCLE_BRANCH
+          command: echo $WORKING_DIRECTORY
 workflows:
   my-custom-workflow:
     jobs:
