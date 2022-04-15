@@ -30,6 +30,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { usePopper } from "react-popper";
 import { useRouter } from 'next/router'
 
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 
 function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
@@ -167,18 +168,24 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
     <div  role = 'post' className="flex flex-col ">
       <div  className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">
         <div className="flex items-center justify-between space-x-2">
-          {/*<img className="rounded-full" src={image} width={40} height={40} />*/}
-          <div>
-            <p className="font-medium">{name}</p>
-            <button type="button" className="inline-flex" onClick={sendFriendRequest}>+</button>
-            {timestamp ? (
-              <p className="text-xs text-gray-400">
-                {new Date(timestamp?.toDate()).toLocaleString()}
-              </p>
-            ) : (
-              <p className="text-xs text-gray-400">Loading</p>
-            )}
-          </div>
+          <div className = 'flex  space-x-2'>
+            <div> 
+                <AccountCircleIcon style={{ fontSize: 40 }} className = "text-blue-300 rounded-full"></AccountCircleIcon>
+              {/* <img className="rounded-full" src={AccountCircleIcon} width={40} height={40} /> */}
+            </div>
+            {/*<img className="rounded-full" src={image} width={40} height={40} />*/}
+            <div>
+              <p className="font-medium">{name}</p>
+              <button type="button" className="inline-flex" onClick={sendFriendRequest}>+</button>
+              {timestamp ? (
+                <p className="text-xs text-gray-400">
+                  {new Date(timestamp?.toDate()).toLocaleString()}
+                </p>
+              ) : (
+                <p className="text-xs text-gray-400">Loading</p>
+              )}
+            </div>
+          </div> 
           {user && user.uid == uid && (
             <div className="text-right">
               <Popover>
