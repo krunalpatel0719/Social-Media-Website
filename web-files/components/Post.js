@@ -33,7 +33,7 @@ import { useRouter } from 'next/router'
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 
-function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
+function Post({ key_id, name, message, uid, profile_picture, postImage, timestamp, likes}) {
   const router = useRouter();
   const user = auth.currentUser;
   
@@ -170,7 +170,15 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
         <div className="flex items-center justify-between space-x-2">
           <div className = 'flex  space-x-2'>
             <div> 
-                <AccountCircleIcon style={{ fontSize: 40 }} className = "text-blue-300 rounded-full"></AccountCircleIcon>
+                {profile_picture ? (
+                  //<img className="rounded-full object-contain h-28 w-28" src={profile_picture}/>
+                  <div className=" relative rounded-full border border-black h-12 w-12">
+                    <Image src={profile_picture} className = "rounded-full" objectFit="contain" layout="fill" />
+                  </div>
+                ) : (
+                  <AccountCircleIcon style={{ fontSize: 46 }} className = "text-blue-300 rounded-full"></AccountCircleIcon>
+                )}
+                
               {/* <img className="rounded-full" src={AccountCircleIcon} width={40} height={40} /> */}
             </div>
             {/*<img className="rounded-full" src={image} width={40} height={40} />*/}
@@ -271,8 +279,8 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
         )}
       </div>
       {postImage && (
-        <div className="relative h-56 md:h-96 bg-white">
-          <Image src={postImage} objectFit="contain" layout="fill" />
+        <div className="relative h-56 md:h-96  bg-white">
+          <Image src={postImage} className = "" objectFit="contain" layout="fill" />
         </div>
       )}
 

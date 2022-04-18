@@ -15,15 +15,20 @@
     "static/development/_middlewareManifest.js"
   ],
   "pages": {
-    "/CommentsPage": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/CommentsPage.js"
-    ],
     "/MainPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/MainPage.js"
+    ],
+    "/SearchedUserPage": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/SearchedUserPage.js"
+    ],
+    "/SettingsPage": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/SettingsPage.js"
     ],
     "/_app": [
       "static/chunks/webpack.js",
