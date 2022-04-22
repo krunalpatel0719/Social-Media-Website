@@ -59,7 +59,10 @@ function Header() {
    
     const docRef = doc(db, "Users", user.uid);
     const docSnap = await getDoc(docRef);
-    setUsername(docSnap.data().username);
+    if(docSnap){
+      setUsername(docSnap.data().username);
+    }
+    
   };
 
   setPageUsername();

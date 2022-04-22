@@ -51,7 +51,7 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
   const sendFriendRequest = () => {
     setDoc(doc(db, "FriendRequests", uid), {
       [user.uid]:true
-    })
+    }, {merge: true});
   }
 
   // React states for the post 

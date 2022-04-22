@@ -303,7 +303,7 @@ function AccountInfo({ posts }) {
                 </button>
                 <button
                   type="button"
-                  onClick = {() => setIsOpen(false)}
+                  onClick = {deleteAccount}
                   className="mx-4 w-28 h-10 text-sm font-semibold text-centered  text-white rounded-full block shadow-xl
                               transition ease-in-out bg-blue-600 hover:bg-blue-500 duration-400"
                 >
