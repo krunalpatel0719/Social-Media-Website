@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  node: circleci/node@5.0.2
+
 executors:
   my-custom-executor:
     docker:
@@ -9,15 +13,21 @@ executors:
           username: $DOCKER_HUB_USER
           password: $DOCKER_HUB_PASSWORD
       - image: cimg/node:16.14.2
-        
 jobs:
   test-job:
-
     executor: my-custom-executor
     steps:
-      - checkout
-      - run: yarn --version
-      - run: yarn test
+      - checkout:
+          path: ~/web-files
+      - node/install:
+          install-yarn: true
+          node-version: '16.13'
+      - run:
+          name: "What branch am I on now?"
+          command: cd web-files
+      - run:
+          name: "Where da majic happens"
+          command: yarn test
 
 workflows:
   my-custom-workflow:
