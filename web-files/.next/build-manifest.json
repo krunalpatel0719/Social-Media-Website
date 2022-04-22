@@ -15,20 +15,20 @@
     "static/development/_middlewareManifest.js"
   ],
   "pages": {
-    "/MainPage": [
+    "/FriendRequestsPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/MainPage.js"
+      "static/chunks/pages/FriendRequestsPage.js"
     ],
-    "/SearchedUserPage": [
+    "/FriendsPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/SearchedUserPage.js"
+      "static/chunks/pages/FriendsPage.js"
     ],
-    "/SettingsPage": [
+    "/Shared": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/SettingsPage.js"
+      "static/chunks/pages/Shared.js"
     ],
     "/_app": [
       "static/chunks/webpack.js",

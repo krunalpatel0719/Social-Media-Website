@@ -10,8 +10,8 @@ import {getAuth, signOut, onAuthStateChanged} from 'firebase/auth';
 import React, { useState, useEffect } from 'react';
 import { db } from "../firebase";
 import {collection, onSnapshot, getDocs,query, orderBy} from "firebase/firestore";
-import AccountInfo from '../components/AccountInfo.js';
-import SharedPosts from '../components/SharedPosts.js'
+import FriendPosts from '../components/FriendPosts.js'
+import FriendsVerticalCard from '../components/FriendsVerticalCard.js'
 
 // Loads the friends page and components 
 
@@ -45,11 +45,14 @@ function FriendsPage({posts}) {
       </Head>
 
       <Header/>
-      <main className='flex flex-wrap relative'>
+      <main className='flex flex-wrap relative space-x-2'>
          
           <Sidebar />
           <FriendPosts posts={posts}/>
-          <FriendsVerticalCard />
+          <div>
+            <p>Friends:</p>
+            <FriendsVerticalCard />
+          </div>
         </main>  
     </div>
     

@@ -17,18 +17,30 @@ function Sidebar() {
     const GoToRequests = () => {
         router.push("/FriendRequestsPage");
     }
-    
+    const GoToFriends = () => {
+        router.push("/FriendsPage");
+    }
     // Renders the side bar and it's icons
     return (
         <div className="p-2 mt-5 max-w-[600px] xl:min-w-[300px]">
-            <SidebarRow Icon={UsersIcon} title="Friends"/>
-            <button type="button" onClick={GoToRequests}>
-                {window.location.pathname == "/FriendRequestsPage" ? (
-                    <SidebarRow Icon={UserGroupIcon} title="Friend Requests"/>
-                ): (
-                    <SidebarRow Icon={UserGroupIcon} title="Friend Requests"/>
-                )}
-            </button>
+            <div>
+                <button type="button" onClick={GoToFriends}>
+                    {window.location.pathname == "/FriendsPage" ? (
+                        <SidebarRow Icon={UsersIcon} title="Friends"/>
+                    ): (
+                        <SidebarRow Icon={UsersIcon} title="Friends"/>
+                    )}
+                </button>
+                </div>
+                <div>
+                <button type="button" onClick={GoToRequests}>
+                    {window.location.pathname == "/FriendRequestsPage" ? (
+                        <SidebarRow Icon={UserGroupIcon} title="Friend Requests"/>
+                    ): (
+                        <SidebarRow Icon={UserGroupIcon} title="Friend Requests"/>
+                    )}
+                </button>
+            </div>
         </div>
     );
 }
