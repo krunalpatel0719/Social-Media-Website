@@ -10,8 +10,8 @@ import {getAuth, signOut, onAuthStateChanged} from 'firebase/auth';
 import React, { useState, useEffect } from 'react';
 import { db } from "../firebase";
 import {collection, onSnapshot, getDocs,query, orderBy} from "firebase/firestore";
-import AccountInfo from '../components/AccountInfo.js';
-import SharedPosts from '../components/SharedPosts.js'
+import FriendPosts from '../components/FriendPosts.js'
+import FriendsVerticalCard from '../components/FriendsVerticalCard.js'
 
 // Loads the friends page and components 
 
