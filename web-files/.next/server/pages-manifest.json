@@ -2,5 +2,9 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
+<<<<<<< HEAD
   "/FriendsPage": "pages/FriendsPage.js"
+=======
+  "/MainPage": "pages/MainPage.js"
+>>>>>>> 45017170923c19def0ac8816c748d5f665c626f2
 }

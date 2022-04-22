@@ -41,7 +41,7 @@ function AccountInfo({ posts }) {
   
 
   const [userInfo, loading, error] = useCollection(
-    query(collection(db, "Users"), where("email", "==", user.email))
+    query(collection(db, "Users"), where("email", "==", (user && user.email)))
   );
   const [bio, setBio] = useState("Edit bio here");
   const [username, setUsername] = useState("");
@@ -64,18 +64,20 @@ function AccountInfo({ posts }) {
   // Updates the variables when the page mounts
   
   useEffect(async () => {
-    const docRef = doc(db, "Users", user.uid);
-    const docSnap = await getDoc(docRef);
-    setLocalGender(docSnap.data().gender);
-    setLocalBio(docSnap.data().bio);
-    updateSettingsData({
-      ...settingsData,
+    if (user) {
+      const docRef = doc(db, "Users", (user.uid));
+      const docSnap = await getDoc(docRef);
+      setLocalGender(docSnap.data().gender);
+      setLocalBio(docSnap.data().bio);
+      updateSettingsData({
+        ...settingsData,
 
-      // Trimming any whitespace
-      ['bio']: docSnap.data().bio,
-      ['age']: docSnap.data().age,
-      ['gender']: docSnap.data().gender,
-    });
+        // Trimming any whitespace
+        ['bio']: docSnap.data().bio,
+        ['age']: docSnap.data().age,
+        ['gender']: docSnap.data().gender,
+      });
+    }
   }, [])
   
  
@@ -83,7 +85,7 @@ function AccountInfo({ posts }) {
  
 
   useEffect( () => {
-
+    if (user) {
     userInfo?.docs.map((data) => {
         if (data.data()) {
             setUid(data.id);
@@ -98,7 +100,7 @@ function AccountInfo({ posts }) {
         }
         
     });
-    
+  }
     
   });
 
@@ -162,6 +164,7 @@ function AccountInfo({ posts }) {
     >
       <div className=" font-sans border bg-white rounded-xl shadow-xl mx-auto max-w-md md:max-w-lg lg:max-w-4xl ">
         <div
+          role = "account-form"
           className="flex flex-col items-center p-2 text-grey-500 font-medium
          pb-16"
         >
@@ -223,6 +226,7 @@ function AccountInfo({ posts }) {
                   defaultValue={age}
                   name="age"
                   type="number"
+                  role='age-input'
                   onChange={handleFormChange}
                   className=" font-medium pr-4 pl-1 text-md  py-1 rounded-lg  
                               bg-white border-2 border-gray-300 w-52 focus:border-blue-600 focus:outline-none"
@@ -264,6 +268,7 @@ function AccountInfo({ posts }) {
             <div className="mt-16">
             <button
                   type="button"
+                 
                   onClick = {() => setIsOpen(true)}
                   className="w-28 h-10 text-sm font-semibold text-centered  text-white rounded-full mx-auto block shadow-xl
                               transition ease-in-out bg-blue-600 hover:bg-blue-500 duration-400"
@@ -281,7 +286,7 @@ function AccountInfo({ posts }) {
       </div>
       {isOpen && (
          <ClientOnlyPortal selector="#deleteAccount-portal">
-            <div className="flex h-screen m-auto">
+            <div  className="flex h-screen m-auto">
               <div className="font-sans m-auto flex-grow">
                 <div className="shadow-md rounded-xl bg-white mx-auto py-8 pb-3 px-10">
                   <div className="relative flex flex-wrap">

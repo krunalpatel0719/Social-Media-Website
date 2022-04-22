@@ -35,6 +35,8 @@ import { useRouter } from 'next/router'
 function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
   const router = useRouter();
   const user = auth.currentUser;
+  
+  
   // Creates the post content 
   
   // Redirects to comment page 
@@ -110,6 +112,11 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
     setEditState(false);
   }
   const likePost =  (e) => {
+    setLikeState(!likeState);
+    if (key_id == null) {
+     
+      return false;
+    }
     if (likeState) {
       
        updateDoc(doc(db, "LikedPosts", user.uid), {
@@ -133,12 +140,13 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
           likes: increment(1)
         });
     }
-    setLikeState(!likeState);
+    
     
   }
   // Loads in the like state when the page renders 
   
   useEffect(async () => {
+    if (user) {
     const docRef = doc(db, "LikedPosts", user.uid);
     const docSnap = await getDoc(docRef);
    
@@ -152,10 +160,11 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
       )
      
     }
+  }
   })
   
   return (
-    <div   className="flex flex-col ">
+    <div  role = 'post' className="flex flex-col ">
       <div  className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">
         <div className="flex items-center justify-between space-x-2">
           {/*<img className="rounded-full" src={image} width={40} height={40} />*/}
@@ -170,16 +179,17 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
               <p className="text-xs text-gray-400">Loading</p>
             )}
           </div>
-          {user.uid == uid && (
+          {user && user.uid == uid && (
             <div className="text-right">
               <Popover>
                 {({ open, close }) => (
                   <>
-                    <Popover.Button ref={setReferenceElement}>
+                    <Popover.Button  ref={setReferenceElement}>
                       <DotsHorizontalIcon className="font-medium h-6 hover:text-neutral-600" />
                     </Popover.Button>
 
                     <Popover.Panel
+                    
                       className="rounded-md p-2 shadow-sm bg-white border flex flex-col "
                       ref={setPopperElement}
                       style={styles.popper}
@@ -261,9 +271,9 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
 
       {/* Post Footer */}
       <div className="flex justify-between items-center rounded-b-2xl bg-white shadow-md text-gray-400 border-t">
-        <div onClick = {likePost} className="inputIcon p-3 rounded-none rounded-bl-2xl">
+        <div role = "like-button" onClick = {likePost} className="inputIcon p-3 rounded-none rounded-bl-2xl">
          
-          <ThumbUpIcon className={`${likeState ? "text-blue-400" : ""} h-4`} />
+          <ThumbUpIcon data-testid = "thumbs-icon" className={`${likeState ? "text-blue-400" : ""} h-4`} />
           <p className="text-xs sm:text-base">{likes}</p>
         </div>
 
