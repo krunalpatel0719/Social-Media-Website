@@ -15,19 +15,25 @@
     "static/development/_middlewareManifest.js"
   ],
   "pages": {
-<<<<<<< HEAD
+    "/CommentsPage": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/CommentsPage.js"
+    ],
     "/FriendRequestsPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/FriendRequestsPage.js"
     ],
     "/FriendsPage": [
-=======
-    "/MainPage": [
->>>>>>> 45017170923c19def0ac8816c748d5f665c626f2
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/FriendsPage.js"
+    ],
+    "/MainPage": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/MainPage.js"
     ],
     "/SettingsPage": [
       "static/chunks/webpack.js",
