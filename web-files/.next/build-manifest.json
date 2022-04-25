@@ -25,11 +25,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/FriendsPage.js"
     ],
-    "/Shared": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/Shared.js"
-    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
