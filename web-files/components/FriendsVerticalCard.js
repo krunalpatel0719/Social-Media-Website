@@ -13,6 +13,7 @@ import FriendCard from "./FriendCard";
     const user = auth.currentUser;
 
     const [Array, setArray] = useState([])
+    const [hasFriends, setHasFriends] = useState(false)
 
       useEffect(async () => {
         if(user){
@@ -20,26 +21,40 @@ import FriendCard from "./FriendCard";
             const collections = await getDoc(sfRef);
             const data = collections.data();
             const tempArray = []
-            console.log(data);
-            Object.keys(data).forEach((usertags) => {
-               console.log(usertags);
-               tempArray.push( {
-                key_id:usertags
+            if (data != null) {
+              Object.keys(data).forEach((usertags) => {
+                console.log(usertags);
+                tempArray.push( {
+                  key_id:usertags
+                })
+                
               })
-               
-            })
-            
-            setArray(tempArray)
+              setHasFriends(true)
+              setArray(tempArray)
+            }
         }
       }, [])
     
     return(
-        <div>
+        <div className="flex-grow flex flex-col items-center pb-12 pt-8 mr-4 xl:mr-40 overflow-y-auto ">
+          {hasFriends == false ? (
+            <div
+              className= "flex font-medium flex-grow text-3xl justify-center pb-12  mr-4 xl:mr-40 overflow-y-auto" >
+           
+              You have no friends, please make some :(
+          
+            </div>
+        ) : (
+          <p className="flex relative font-medium text-3xl justify-center pb-12  mr-4 xl:mr-40 overflow-y-auto">Friends</p>
+        )}
+          <div className = "grid grid-cols-2 gap-14  mr-4 xl:mr-40 ">
            {
-               Array.map((item) => 
+
+               Array?.map((item) => 
                     <FriendCard key_id = {item.key_id}/>
                )
            }
+           </div> 
         </div>
         
     )

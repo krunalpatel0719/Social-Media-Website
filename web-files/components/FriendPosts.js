@@ -42,7 +42,7 @@ import FriendPost_med from "./FriendPost_med";
             const collections = await getDoc(sfRef);
             const data = collections.data();
             const tempArray = []
-            console.log(data);
+            if (data != null) {
             Object.keys(data).forEach((usertags) => {
                 
                 tempArray.push( {
@@ -50,16 +50,16 @@ import FriendPost_med from "./FriendPost_med";
                   })
             })
             
-            setArray(tempArray)
-
+              setArray(tempArray)
+            }
         }
       }, [])
  
-      console.log(Array1);
+      
   return (
     <div>
     {
-      Array1.map((item) => 
+      Array1?.map((item) => 
       <FriendPost_med key_id = {item.key_id}/>
  )
      }

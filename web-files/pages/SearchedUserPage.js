@@ -15,6 +15,7 @@ import {
   getDocs,
   query,
   doc,
+  setDoc,
   orderBy,
   where,
 } from "firebase/firestore";
@@ -67,6 +68,12 @@ function CommentsPage() {
     doc(db, "Users", uidString)
   );
  
+  const sendFriendRequest = () => {
+    const user = auth.currentUser;
+    setDoc(doc(db, "FriendRequests", uidString), {
+      [user.uid]:true
+    })
+  }
   useEffect(() => {
     if (userSnapshot) {
      
@@ -130,15 +137,16 @@ function CommentsPage() {
               </div>
               <p className=" pt-3  font-semibold text-2xl text-center">{name + ", "+ age}</p>
               <p className="pb-4 pt-1 font-medium text-lg  text-center text-slate-500">{username}</p>
+              {uidString != auth.currentUser.uid && (
               <button
                   type="button"
-                  
+                  onClick = {sendFriendRequest}
                   className=" mb-4 w-40 h-10 text-sm font-semibold text-center  text-white rounded-full block shadow-xl
                               transition ease-in-out bg-blue-600 hover:bg-blue-500 duration-400"
                 >
                   Send Friend Request
                   
-                </button>
+                </button>)}
             </div>
             <div className ='border-l-4 flex  justify-between flex-grow flex-col p-2 py-2 pt-8 w-72'>
               <p className=" font-medium text-lg ">{bio}</p>
