@@ -24,6 +24,7 @@ import {collection, query, orderBy,where} from "firebase/firestore";
             content={origin_post.data().content}
             uid = {origin_post.data().uid}
             timestamp={origin_post.data().timestamp}
+            profile_picture={origin_post.data().profile_picture || null}
           />
           
         ))

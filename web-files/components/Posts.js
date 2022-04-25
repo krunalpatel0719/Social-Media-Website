@@ -1,34 +1,47 @@
-import { db } from "../firebase";
-import { useCollection } from "react-firebase-hooks/firestore";
-import Post from "./Post";
-import {collection, query, orderBy} from "firebase/firestore";
- function Posts() {
+import { auth, db } from "../firebase";
 
-  // Gets the posts from the database and renders them in real time 
-     const [realtimePosts, loading, error] =  useCollection(
-     query(collection(db, "Posts"), orderBy("timestamp", "desc"))
+import Post from "./Post";
+import { useState, useEffect, useRef } from "react";
+
+import { useCollection } from "react-firebase-hooks/firestore";
+import {
+  collection,
+  query,
+  orderBy,
+  getDoc,
+  getDocs,
+  doc,
+} from "firebase/firestore";
+function Posts() {
+  const user = auth.currentUser;
+
+
+  const [profilePicture, setProfilePicture] = useState(null)
+
+  // Gets the posts from the database and renders them in real time
+  const [realtimePosts, loading, error] = useCollection(
+    query(collection(db, "Posts"), orderBy("timestamp", "desc"))
   );
   //orderBy("name", "desc")
- 
+
   return (
     <div>
-    {
-      realtimePosts?.docs.map((post) => (
-        
-          <Post
-            key_id={post.id}
-            name={post.data().username}
-            message={post.data().content}
-            uid = {post.data().uid}
-            timestamp={post.data().timestamp}
-            likes = {post.data().likes}
-            postImage={post.data().postImage}
-          />
-          
-        ))
-     }
-  </div>)
-  {/* 
+      {realtimePosts?.docs.map((post) => (
+        <Post
+          key_id={post.id}
+          name={post.data().username}
+          message={post.data().content}
+          uid={post.data().uid}
+          timestamp={post.data().timestamp}
+          likes={post.data().likes}
+          postImage={post.data().postImage}
+          profile_picture={post.data().profile_picture || null}
+        />
+      ))}
+    </div>
+  );
+  {
+    /* 
     <div>
       {realtimePosts
         ? 
@@ -54,8 +67,8 @@ import {collection, query, orderBy} from "firebase/firestore";
             />
           ))}
     </div>
-        */}
- 
+        */
+  }
 }
 
 export default Posts;

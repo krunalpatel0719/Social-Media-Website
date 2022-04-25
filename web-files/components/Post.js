@@ -4,6 +4,7 @@ import {
   ThumbUpIcon,
   PencilAltIcon,
   TrashIcon,
+  UserAddIcon
 } from "@heroicons/react/outline";
 import Image from "next/image";
 import { DotsHorizontalIcon } from "@heroicons/react/solid";
@@ -23,6 +24,8 @@ import {
   where,
   increment,
 } from "firebase/firestore";
+
+
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import React, { useState, useEffect, useRef} from "react";
 
@@ -30,9 +33,10 @@ import { Popover, Transition } from "@headlessui/react";
 import { usePopper } from "react-popper";
 import { useRouter } from 'next/router'
 
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 
-function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
+function Post({ key_id, name, message, uid, profile_picture, postImage, timestamp, likes}) {
   const router = useRouter();
   const user = auth.currentUser;
   
@@ -45,6 +49,13 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
     router.push({
       pathname: `/CommentsPage`,
       query: { post_id: key_id }
+    });
+  }
+
+  const GoToUser = () => {
+    router.push({
+      pathname: `/SearchedUserPage`,
+      query: { user_id: uid }
     });
   }
 
@@ -167,18 +178,35 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
     <div  role = 'post' className="flex flex-col ">
       <div  className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">
         <div className="flex items-center justify-between space-x-2">
-          {/*<img className="rounded-full" src={image} width={40} height={40} />*/}
-          <div>
-            <p className="font-medium">{name}</p>
-            <button type="button" className="inline-flex" onClick={sendFriendRequest}>+</button>
-            {timestamp ? (
-              <p className="text-xs text-gray-400">
-                {new Date(timestamp?.toDate()).toLocaleString()}
+          <div className = 'flex  space-x-2 '>
+            <div> 
+                {profile_picture ? (
+                  //<img className="rounded-full object-contain h-28 w-28" src={profile_picture}/>
+                  <div onClick = {GoToUser} className=" cursor-pointer relative rounded-full border border-black h-12 w-12">
+                    <Image src={profile_picture} className = "rounded-full" objectFit="contain" layout="fill" />
+                  </div>
+                ) : (
+                  <AccountCircleIcon style={{ fontSize: 46 }} onClick = {GoToUser} className = "cursor-pointer text-blue-300 rounded-full"></AccountCircleIcon>
+                )}
+                
+              {/* <img className="rounded-full" src={AccountCircleIcon} width={40} height={40} /> */}
+            </div>
+            {/*<img className="rounded-full" src={image} width={40} height={40} />*/}
+            <div>
+              <p className="flex-grow font-medium flex items-center pb-1">{name}
+                {uid != user.uid && (<UserAddIcon onClick={sendFriendRequest} className="ml-2 h-5 w-5 hover:text-blue-400 cursor-pointer" /> )}
               </p>
-            ) : (
-              <p className="text-xs text-gray-400">Loading</p>
-            )}
-          </div>
+
+              
+              {timestamp ? (
+                <p className="text-xs text-gray-400">
+                  {new Date(timestamp?.toDate()).toLocaleString()}
+                </p>
+              ) : (
+                <p className="text-xs text-gray-400">Loading</p>
+              )}
+            </div>
+          </div> 
           {user && user.uid == uid && (
             <div className="text-right">
               <Popover>
@@ -264,17 +292,18 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
         )}
       </div>
       {postImage && (
-        <div className="relative h-56 md:h-96 bg-white">
-          <Image src={postImage} objectFit="contain" layout="fill" />
+        <div className="relative h-56 md:h-96  bg-white">
+          <Image src={postImage} className = "" objectFit="contain" layout="fill" />
         </div>
       )}
 
       {/* Post Footer */}
       <div className="flex justify-between items-center rounded-b-2xl bg-white shadow-md text-gray-400 border-t">
-        <div role = "like-button" onClick = {likePost} className="inputIcon p-3 rounded-none rounded-bl-2xl">
-         
-          <ThumbUpIcon data-testid = "thumbs-icon" className={`${likeState ? "text-blue-400" : ""} h-4`} />
-          <p className="text-xs sm:text-base">{likes}</p>
+      <div className="inputIcon p-3 rounded-none rounded-bl-2xl">
+          <button role = "like-button" onClick={likePost} className="inputIcon p-3 rounded-none ">
+            <ThumbUpIcon data-testid = "thumbs-icon" className={`${likeState ? "text-blue-400" : ""} h-4`} />
+            <p className="text-xs sm:text-base">{likes}</p>
+            </button>
         </div>
 
         <div className="inputIcon p-3 rounded-none">
@@ -285,8 +314,10 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes}) {
         </div>
 
         <div className="inputIcon p-3 rounded-none rounded-br-2xl">
-          <ShareIcon className="h-4" />
+        <button className="inputIcon p-3 rounded-none">
+          <ShareIcon className="h-4 " />
           <p className="text-xs sm:text-base">Share</p>
+          </button>
         </div>
       </div>
     </div>
