@@ -48,11 +48,11 @@ function FriendsPage({posts}) {
       <main className='flex flex-wrap relative space-x-2'>
          
           <Sidebar />
-          <FriendPosts posts={posts}/>
-          <div>
-            <p>Friends:</p>
+         
+          
+            
             <FriendsVerticalCard />
-          </div>
+          
         </main>  
     </div>
     

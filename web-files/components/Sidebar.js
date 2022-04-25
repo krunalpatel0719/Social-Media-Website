@@ -26,16 +26,15 @@ function Sidebar() {
             <div>
                 <button type="button" onClick={GoToFriends}>
                     {window.location.pathname == "/FriendsPage" ? (
-                        <SidebarRow Icon={UsersIcon} title="Friends"/>
+                        <SidebarRow active Icon={UsersIcon} title="Friends"/>
                     ): (
                         <SidebarRow Icon={UsersIcon} title="Friends"/>
                     )}
                 </button>
-                </div>
-                <div>
+                <div></div>
                 <button type="button" onClick={GoToRequests}>
                     {window.location.pathname == "/FriendRequestsPage" ? (
-                        <SidebarRow Icon={UserGroupIcon} title="Friend Requests"/>
+                        <SidebarRow active Icon={UserGroupIcon} title="Friend Requests"/>
                     ): (
                         <SidebarRow Icon={UserGroupIcon} title="Friend Requests"/>
                     )}
