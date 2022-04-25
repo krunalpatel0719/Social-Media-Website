@@ -42,11 +42,7 @@ import FriendPost_med from "./FriendPost_med";
             const collections = await getDoc(sfRef);
             const data = collections.data();
             const tempArray = []
-<<<<<<< HEAD
-            console.log(data);
-=======
             if (data != null) {
->>>>>>> KrunalsTestBranch
             Object.keys(data).forEach((usertags) => {
                 
                 tempArray.push( {
@@ -54,18 +50,6 @@ import FriendPost_med from "./FriendPost_med";
                   })
             })
             
-<<<<<<< HEAD
-            setArray(tempArray)
-
-        }
-      }, [])
- 
-      console.log(Array1);
-  return (
-    <div>
-    {
-      Array1.map((item) => 
-=======
               setArray(tempArray)
             }
         }
@@ -76,7 +60,6 @@ import FriendPost_med from "./FriendPost_med";
     <div>
     {
       Array1?.map((item) => 
->>>>>>> KrunalsTestBranch
       <FriendPost_med key_id = {item.key_id}/>
  )
      }

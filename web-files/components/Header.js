@@ -62,25 +62,7 @@ function Header() {
   };
 
   const GoToShared = () => {
-<<<<<<< HEAD
       router.push("/Shared");
-  }
-
-  const [username, setUsername] = React.useState(user && user.displayName);
-
-  // Sets the username on the page 
-  
-  const setPageUsername = async () => {
-   if (user) {
-    const docRef = doc(db, "Users", user.uid);
-    const docSnap = await getDoc(docRef);
-    if(docSnap){
-      setUsername(docSnap.data().username);
-    }}
-    
-=======
-    router.push("/Shared");
->>>>>>> KrunalsTestBranch
   };
 
   const [realtimeUsers, loading, error] =  useCollection(

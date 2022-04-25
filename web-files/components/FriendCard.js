@@ -8,10 +8,7 @@ import {
   where,
   updateDoc,
   doc,
-<<<<<<< HEAD
   deleteField,
-=======
->>>>>>> c24bea45b392ff5e971795530fc5c99f69a9c6fc
   setDoc,
   getDoc,
 } from "firebase/firestore";
@@ -31,41 +28,27 @@ import EditIcon from "@material-ui/icons/Edit";
 
 import { PencilIcon } from "@heroicons/react/solid";
 
-<<<<<<< HEAD
 import { UserCircleIcon } from "@heroicons/react/solid";
 import MaleIcon from '@mui/icons-material/Male';
 import FemaleIcon from '@mui/icons-material/Female';
-=======
->>>>>>> c24bea45b392ff5e971795530fc5c99f69a9c6fc
 
 function FriendCard({key_id}){
 
     const user = auth.currentUser;
-<<<<<<< HEAD
     const [profileImage, setProfileImage] = useState("")
-=======
-    
->>>>>>> c24bea45b392ff5e971795530fc5c99f69a9c6fc
     const [bio, setBio] = useState();
     const [username, setUsername] = useState();
     const [name, setName] = useState();
     const [age, setAge] = useState();
     const [gender, setGender] = useState();
     const [uid, setUid] = useState();
-<<<<<<< HEAD
     const [deleted, setDeleted] = useState(false)
-=======
->>>>>>> c24bea45b392ff5e971795530fc5c99f69a9c6fc
 
       useEffect(async () => {
         if(user){
             const sfRef = doc(collection(db,'Users'), key_id);
             const collections = await getDoc(sfRef);
-<<<<<<< HEAD
             
-=======
-            console.log(collections.data())
->>>>>>> c24bea45b392ff5e971795530fc5c99f69a9c6fc
             const data = collections.data();
             setBio(data.bio);
             setUsername(data.username);
@@ -73,7 +56,6 @@ function FriendCard({key_id}){
             setAge(data.age);
             setGender(data.gender);
             setUid(key_id);
-<<<<<<< HEAD
             setProfileImage(data.profile_picture)
         }
       }, [])
@@ -143,27 +125,6 @@ function FriendCard({key_id}){
       
      
     )
-=======
-
-        }
-      }, [])
-
-    return(
-            <div  className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm border-4 border-blue-600">
-                <div className="items-center justify-between space-x-2 rounded-md">
-                    <div>
-                        <p>{name} ({username})</p>
-                    </div>
-                    <div>
-                        <p>gender: {gender}</p>
-                        <p>bio: {bio}</p>
-                        <p>age: {age}</p>
-                    </div>
-                </div>
-            </div>
-        
-    );
->>>>>>> c24bea45b392ff5e971795530fc5c99f69a9c6fc
 }
 
 export default FriendCard;

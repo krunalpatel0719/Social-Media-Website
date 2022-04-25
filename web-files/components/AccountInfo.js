@@ -383,16 +383,6 @@ function AccountInfo({ posts }) {
                           onClick={deleteAccount}
                           className="mx-4 w-28 h-10 text-sm font-semibold text-centered  text-white rounded-full block shadow-xl
                               transition ease-in-out bg-blue-600 hover:bg-blue-500 duration-400"
-<<<<<<< HEAD
-                >
-                  Delete Account
-                  
-                </button>
-                <button
-                  type="button"
-                  onClick = {deleteAccount}
-                  className="mx-4 w-28 h-10 text-sm font-semibold text-centered  text-white rounded-full block shadow-xl
-=======
                         >
                           Delete Account
                         </button>
@@ -400,7 +390,6 @@ function AccountInfo({ posts }) {
                           type="button"
                           onClick={() => setIsOpen(false)}
                           className="mx-4 w-28 h-10 text-sm font-semibold text-centered  text-white rounded-full block shadow-xl
->>>>>>> KrunalsTestBranch
                               transition ease-in-out bg-blue-600 hover:bg-blue-500 duration-400"
                         >
                           Cancel
