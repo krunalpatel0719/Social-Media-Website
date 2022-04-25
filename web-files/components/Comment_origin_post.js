@@ -24,24 +24,34 @@ import {
 import { getStorage, ref, deleteObject } from "firebase/storage";
 import React, { useState, useEffect } from "react";
 
+import { useCollection } from "react-firebase-hooks/firestore";
 import { Popover, Transition } from "@headlessui/react";
 import { usePopper } from "react-popper";
 
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
-function Post({ key_id, name, message, uid, postImage, timestamp, likes }) {
-  
-  // Loads the original post for the comment 
+function Post({
+  key_id,
+  name,
+  message,
+  profile_picture,
+  uid,
+  postImage,
+  timestamp,
+  likes,
+}) {
+  // Loads the original post for the comment
 
   const router = useRouter();
   const user = auth.currentUser;
   const GoToComment = () => {
     router.push({
       pathname: `/Comment_InputBox`,
-      query: { post_id: key_id }
+      query: { post_id: key_id },
     });
-  }
+  };
   let [referenceElement, setReferenceElement] = useState();
   let [popperElement, setPopperElement] = useState();
   let [newMessage, setNewMessage] = useState("");
@@ -51,43 +61,51 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes }) {
     placement: "bottom-end",
   });
 
+  const [commentInfo, loading, error] = useCollection(
+    query(collection(db, "Comments"), where("origin_docID", "==", key_id))
+  );
+
   
+  
+  // Create a query against the collection.
 
   const handleMessageChange = (e) => {
-
     let target_value = e.target.value;
     setNewMessage(target_value);
-  }
+  };
   const deletePost = async (e) => {
     setEditState(false);
     await deleteDoc(doc(db, "Posts", key_id));
 
     const storage = getStorage();
 
-    const postRef = ref(storage, 'Posts/' + key_id);
+    const postRef = ref(storage, "Posts/" + key_id);
 
     // Delete the file
-    deleteObject(postRef).then(() => {
-      // File deleted successfully
-    }).catch((error) => {
-      console.log(error);
-      // Uh-oh, an error occurred!
-    });
-
+    deleteObject(postRef)
+      .then(() => {
+        // File deleted successfully
+      })
+      .catch((error) => {
+        console.log(error);
+        // Uh-oh, an error occurred!
+      });
+      commentInfo?.docs.map((data) => {
+        deleteDoc(doc(db, "Comments", data.id));
+      })
+    // Deletes comments on the post
   };
 
-  
   const editPost = (e) => {
-
     setEditState(true);
   };
   const updatePost = async (e) => {
     e.preventDefault();
     await updateDoc(doc(db, "Posts", key_id), {
-      content: newMessage
+      content: newMessage,
     });
     setEditState(false);
-  }
+  };
   const likePost = (e) => {
     setLikeState(!likeState);
     if (likeState) {
@@ -95,21 +113,39 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes }) {
     } else {
       likes = 0;
     }
-  }
+  };
   return (
     <div className="flex flex-col ">
       <div className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">
         <div className="flex items-center justify-between space-x-2">
-          {/*<img className="rounded-full" src={image} width={40} height={40} />*/}
-          <div>
-            <p className="font-medium">{name}</p>
-            {timestamp ? (
-              <p className="text-xs text-gray-400">
-                {new Date(timestamp?.toDate()).toLocaleString()}
-              </p>
-            ) : (
-              <p className="text-xs text-gray-400">Loading</p>
-            )}
+          <div className="flex  space-x-2">
+            <div>
+              {profile_picture ? (
+                <div className=" relative rounded-full border border-black h-12 w-12">
+                  <Image
+                    src={profile_picture}
+                    className="rounded-full"
+                    objectFit="contain"
+                    layout="fill"
+                  />
+                </div>
+              ) : (
+                <AccountCircleIcon
+                  style={{ fontSize: 46 }}
+                  className="text-blue-300 rounded-full"
+                ></AccountCircleIcon>
+              )}
+            </div>
+            <div>
+              <p className="font-medium">{name}</p>
+              {timestamp ? (
+                <p className="text-xs text-gray-400">
+                  {new Date(timestamp?.toDate()).toLocaleString()}
+                </p>
+              ) : (
+                <p className="text-xs text-gray-400">Loading</p>
+              )}
+            </div>
           </div>
           {user.uid == uid && (
             <div className="text-right">
@@ -160,9 +196,15 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes }) {
           )}
         </div>
         {editState ? (
-          <div className='flex flex-col  justify-center '>
-            <form onSubmit={e => { e.preventDefault() }} className='pt-4 '>
-              <input className="w-full h-full border-2 border-blue-400 rounded focus:border-blue-500 focus:outline-none"
+          <div className="flex flex-col  justify-center ">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+              className="pt-4 "
+            >
+              <input
+                className="w-full h-full border-2 border-blue-400 rounded focus:border-blue-500 focus:outline-none"
                 type="text"
                 onChange={handleMessageChange}
                 defaultValue={message}
@@ -179,7 +221,10 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes }) {
               </button>
               <button
                 type="button"
-                onClick={e => { e.preventDefault(); setEditState(false) }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setEditState(false);
+                }}
                 className="mx-1 text-md font-semibold text-centered text-white rounded-full  w-20  block shadow-xl
                                 transition ease-in-out  bg-blue-500 hover:bg-blue-400 duration-400"
               >
@@ -187,9 +232,6 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes }) {
               </button>
             </div>
           </div>
-
-
-
         ) : (
           <p className="pt-4">{message}</p>
         )}
@@ -199,11 +241,8 @@ function Post({ key_id, name, message, uid, postImage, timestamp, likes }) {
           <Image src={postImage} objectFit="contain" layout="fill" />
         </div>
       )}
-
-      
     </div>
   );
-  
 }
 
 export default Post;

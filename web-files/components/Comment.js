@@ -7,10 +7,11 @@ import {
 } from "@heroicons/react/outline";
 import { DotsHorizontalIcon } from "@heroicons/react/solid";
 import { auth, db } from "../firebase";
+import Image from "next/image";
 import {
     doc,
     addDoc,
-    setDoc,
+    setDoc, 
     getDoc,
     deleteDoc,
     updateDoc,
@@ -28,8 +29,9 @@ import { usePopper } from "react-popper";
 
 import { useRouter } from 'next/router'
 
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
-function Comment({ doc_id, origin_DocID, username, content, uid, timestamp }) {
+function Comment({ doc_id, origin_DocID, username, profile_picture, content, uid, timestamp }) {
 
     // Renders a comment and it's functions
 
@@ -85,16 +87,30 @@ function Comment({ doc_id, origin_DocID, username, content, uid, timestamp }) {
         <div className="flex flex-col ">
             <div className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">
                 <div className="flex items-center justify-between space-x-2">
+                <div className = 'flex  space-x-2'>
                     {/*<img className="rounded-full" src={image} width={40} height={40} />*/}
-                    <div>
-                        <p className="font-medium">{username}</p>
-                        {timestamp ? (
-                            <p className="text-xs text-gray-400">
-                                {new Date(timestamp?.toDate()).toLocaleString()}
-                            </p>
-                        ) : (
-                            <p className="text-xs text-gray-400">Loading</p>
-                        )}
+                        <div> 
+                            {profile_picture ? (
+                            //<img className="rounded-full object-contain h-28 w-28" src={profile_picture}/>
+                            <div className=" relative rounded-full border border-black h-12 w-12">
+                                <Image src={profile_picture} className = "rounded-full" objectFit="contain" layout="fill" />
+                            </div>
+                            ) : (
+                            <AccountCircleIcon style={{ fontSize: 46 }} className = "text-blue-300 rounded-full"></AccountCircleIcon>
+                            )}
+                            
+                        {/* <img className="rounded-full" src={AccountCircleIcon} width={40} height={40} /> */}
+                        </div>
+                        <div>
+                            <p className="font-medium">{username}</p>
+                            {timestamp ? (
+                                <p className="text-xs text-gray-400">
+                                    {new Date(timestamp?.toDate()).toLocaleString()}
+                                </p>
+                            ) : (
+                                <p className="text-xs text-gray-400">Loading</p>
+                            )}
+                        </div>
                     </div>
                     {user.uid == uid && (
                         <div className="text-right">

@@ -28,11 +28,13 @@ function InputBox() {
 
     const [username, setUsername] = useState(user && (user.displayName));
     
-
+    const [profilePicture, setProfilePicture] = useState('');
+    
     const setPageUsername = async () => {
         const docRef = doc(db, "Users", user.uid);
         const docSnap = await getDoc(docRef);
         setUsername(docSnap.data().username)
+        setProfilePicture(docSnap.data().profile_picture)
     }
     
     setPageUsername()
@@ -53,6 +55,7 @@ function InputBox() {
             username: user.displayName,
             timestamp: serverTimestamp(),
             likes: 0,
+            profile_picture: profilePicture
         }).then( doc2 =>{
             const storageRef = ref(storage, `Posts/${doc2.id}`);
             setDoc(doc(db, "Posts", doc2.id), {
