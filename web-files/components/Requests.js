@@ -51,20 +51,23 @@ function Requests({ posts }) {
             
             if (data != null) {
               Object.keys(data).forEach((usertags) => {
-                console.log(usertags);
+              
                 tempArray.push( {
                   key_id:usertags
                 })
                 
               })
-              setHasRequests(true)
+              if (tempArray.length != 0) {
+                setHasRequests(true)
+              }
+             
               setArray(tempArray)
             }
         }
       }, [])
     
     return(
-      <div className="flex-grow flex flex-col items-center pb-12 pt-8 mr-4 xl:mr-40 overflow-y-auto ">
+      <div className="flex flex-col flex-grow items-center pb-12 pt-8 mr-4 xl:mr-40 overflow-y-auto ">
         {hasRequests == false ? (
           <div
             className= "flex font-medium flex-grow text-3xl justify-center pb-12  mr-4 xl:mr-40 overflow-y-auto" >
@@ -73,16 +76,16 @@ function Requests({ posts }) {
         
           </div>
       ) : (
-        <p className="flex relative font-medium text-3xl justify-center pb-12  mr-4 xl:mr-40 overflow-y-auto">Friend Requests</p>
+        <p className="flex flex-shrink font-medium text-3xl justify-center pb-12  mr-4 xl:mr-40 overflow-y-auto">Friend Requests</p>
       )}
-        <div className = "grid grid-cols-2 gap-14  mr-4 xl:mr-40 ">
+        <div className = "pt-4 grid grid-cols-1 md:grid-cols-2 gap-14  mr-4 xl:mr-40 ">
         {
 
             Array?.map((item) => 
                   <Request key_id = {item.key_id}/>
             )
         }
-        </div> 
+        </div>
       </div>
       
         
