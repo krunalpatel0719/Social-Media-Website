@@ -116,7 +116,7 @@ function CommentsPage() {
    
     
  
-  
+  // Returns account info for user
 
   return (
     <div>
