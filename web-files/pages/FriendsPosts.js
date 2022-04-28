@@ -48,9 +48,13 @@ function FriendsPosts({posts}) {
       <main className='flex flex-wrap relative space-x-2'>
          
           <Sidebar />
-          <div>
-            <p>This page  displays exclusively posts that were submitted by friends</p>
-            <FriendPosts posts={posts}/>
+          <div className="flex-grow  pb-44 pt-6 mr-4
+    xl:mr-40 overflow-y-auto">
+            <div className='mx-auto max-w-md md:max-w-lg lg:max-w-2xl'>
+                <p>This page  displays exclusively posts that were submitted by friends</p>
+                <FriendPosts posts={posts}/>
+            </div>
+            
           </div>
         </main>  
     </div>

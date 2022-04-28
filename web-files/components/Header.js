@@ -65,6 +65,10 @@ function Header() {
       router.push("/Shared");
   };
 
+  const GoToFriendsPosts = () => {
+    router.push("/FriendsPosts");
+  }
+
   const [realtimeUsers, loading, error] =  useCollection(
       query(collection(db, "Users"))
   );
@@ -238,10 +242,17 @@ function Header() {
               <HeaderIcon Icon={HomeIcon} />
             )}
           </button>
-          <HeaderIcon Icon={FlagIcon} />
-
+          
           <button type="button" onClick={GoToShared}>
             {window.location.pathname == "/Shared" ? (
+              <HeaderIcon Icon={FlagIcon} />
+            ) : (
+              <HeaderIcon Icon={FlagIcon} />
+            )}
+          </button>
+
+          <button type="button" onClick={GoToFriendsPosts}>
+            {window.location.pathname == "/FriendsPosts" ? (
               <HeaderIcon active Icon={UserGroupIcon} />
             ) : (
               <HeaderIcon Icon={UserGroupIcon} />

@@ -57,13 +57,16 @@ import FriendPost_med from "./FriendPost_med";
  
       
   return (
-    <div>
+    <div className="mx-auto max-w-md md:max-w-lg lg:max-w-2xl flex-grow  pb-44 pt-6 mr-4
+    xl:mr-40 overflow-y-auto">
     {
+        
       Array1?.map((item) => 
       <FriendPost_med key_id = {item.key_id}/>
  )
      }
-  </div>)
+  </div>
+  )
  
 }
 

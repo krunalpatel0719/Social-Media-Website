@@ -25,10 +25,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/FriendsPage.js"
     ],
+    "/FriendsPosts": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/FriendsPosts.js"
+    ],
     "/MainPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/MainPage.js"
+    ],
+    "/Shared": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/Shared.js"
     ],
     "/_app": [
       "static/chunks/webpack.js",
