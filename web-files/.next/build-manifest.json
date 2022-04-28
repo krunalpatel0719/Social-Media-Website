@@ -20,20 +20,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/index.js"
     ],
-    "/FriendRequestsPage": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/FriendRequestsPage.js"
-    ],
-    "/FriendsPage": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/FriendsPage.js"
-    ],
     "/MainPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/MainPage.js"
+    ],
+    "/Shared": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/Shared.js"
     ],
     "/_app": [
       "static/chunks/webpack.js",
