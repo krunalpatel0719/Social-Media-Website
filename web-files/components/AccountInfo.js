@@ -11,6 +11,7 @@ import {
   where,
   updateDoc,
   doc,
+  deleteDoc,
   setDoc,
   getDoc,
 } from "firebase/firestore";
@@ -158,7 +159,11 @@ function AccountInfo({ posts }) {
   };
 
   const deleteAccount = () => {
+    deleteDoc(doc(db, "Users", uid));
+   
     deleteUser(user);
+    
+
   };
 
   const removeProfilePicture = () => {

@@ -36,9 +36,10 @@ import { useRouter } from 'next/router'
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 
-function Post({ key_id, name, message, uid, profile_picture, postImage, timestamp, likes}) {
+function Post({ key_id, name, message, uid, profile_picture, postImage, timestamp, likes, friends}) {
   const router = useRouter();
   const user = auth.currentUser;
+  
   
   
   // Creates the post content 
@@ -64,7 +65,7 @@ function Post({ key_id, name, message, uid, profile_picture, postImage, timestam
   const sendFriendRequest = () => {
     setDoc(doc(db, "FriendRequests", uid), {
       [user.uid]:true
-    })
+    }, {merge: true})
   }
 
   // React states for the post 
@@ -171,9 +172,31 @@ function Post({ key_id, name, message, uid, profile_picture, postImage, timestam
       )
      
     }
+    
   }
   })
-  
+  useEffect(async () => {
+    const sfRef = doc(db, 'Friends', user.uid);
+    const collections = await getDoc(sfRef);
+    const data = collections.data();
+    const tempArray = []
+    if (data != null) {
+     
+      // Object.keys(data).forEach((usertags) => {
+      //   console.log(usertags)
+      //   tempArray.push( {
+      //     key_id: usertags
+      //   })
+        
+      // })
+      if (tempArray.length != 0) {
+        //setUserFriends(tempArray)
+       // console.log(tempArray)
+      }
+      
+    }
+
+  }, [])
   return (
     <div  role = 'post' className="flex flex-col ">
       <div  className="p-5 bg-white mt-5 rounded-t-2xl shadow-sm">
@@ -194,7 +217,9 @@ function Post({ key_id, name, message, uid, profile_picture, postImage, timestam
             {/*<img className="rounded-full" src={image} width={40} height={40} />*/}
             <div>
               <p className="flex-grow font-medium flex items-center pb-1">{name}
-                {uid != user.uid && (<UserAddIcon onClick={sendFriendRequest} className="ml-2 h-5 w-5 hover:text-blue-400 cursor-pointer" /> )}
+                {uid != user.uid && friends.includes(uid) == false && (<UserAddIcon onClick={sendFriendRequest} className="ml-2 h-5 w-5 hover:text-blue-400 cursor-pointer" /> )}
+               
+                
               </p>
 
               

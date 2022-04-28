@@ -45,7 +45,7 @@ function FriendsPage({posts}) {
       </Head>
 
       <Header/>
-      <main className='flex flex-wrap relative space-x-2'>
+      <main className='flex relative space-x-2'>
          
           <Sidebar />
          

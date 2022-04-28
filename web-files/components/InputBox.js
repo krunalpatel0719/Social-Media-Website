@@ -34,7 +34,7 @@ function InputBox() {
         const docRef = doc(db, "Users", user.uid);
         const docSnap = await getDoc(docRef);
         setUsername(docSnap.data().username)
-        setProfilePicture(docSnap.data().profile_picture)
+        setProfilePicture(docSnap.data().profile_picture || null)
     }
     
     setPageUsername()

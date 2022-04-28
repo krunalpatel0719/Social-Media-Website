@@ -69,6 +69,7 @@ function FriendCard({key_id}){
         updateDoc(doc(db, "Friends", user.uid), {
             [key_id]:deleteField()
         });
+        
         setDeleted(true)
       
     }

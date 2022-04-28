@@ -140,13 +140,13 @@ function Header() {
 
   // Sets the username on the page
 
-  const setPageUsername = async () => {
-    if (user) {
-      const docRef = doc(db, "Users", user.uid);
-      const docSnap = await getDoc(docRef);
-      setUsername(docSnap.data().username);
-    }
-  };
+  // const setPageUsername = async () => {
+  //   if (user) {
+  //     const docRef = doc(db, "Users", user.uid);
+  //     const docSnap = await getDoc(docRef);
+  //     setUsername(docSnap.data().username || "");
+  //   }
+  // };
 
   const handleClickOutside = (event) => {
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
@@ -154,7 +154,14 @@ function Header() {
     }
   }
   
-  React.useEffect(() => {
+  useEffect(async () => {
+    if (user) {
+        const docRef = doc(db, "Users", user.uid);
+        const docSnap = await getDoc(docRef);
+        setUsername(docSnap.data().username || "");
+      }
+  }, [])
+  useEffect(() => {
     window.addEventListener('click', handleClickOutside);
 
     // cleanup this component
@@ -165,7 +172,7 @@ function Header() {
 
 
   const wrapperRef = useRef(null);
-  setPageUsername();
+  // setPageUsername();
 
   return (
     <div
