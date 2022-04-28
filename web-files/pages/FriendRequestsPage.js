@@ -44,7 +44,7 @@ function FriendRequestsPage({posts}) {
       </Head>
 
       <Header/>
-      <main className='flex flex-wrap relative'>
+      <main className='flex  relative'>
          
           <Sidebar />
           <Requests posts={posts}/>

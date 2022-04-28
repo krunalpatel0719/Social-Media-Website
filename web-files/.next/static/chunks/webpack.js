@@ -150,7 +150,11 @@
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
+<<<<<<< HEAD
 /******/ 		__webpack_require__.h = function() { return "8cdb9e355ec3c842"; }
+=======
+/******/ 		__webpack_require__.h = function() { return "2b09a104d1cdd5f7"; }
+>>>>>>> KrunalsTestBranch
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

@@ -92,6 +92,7 @@ function SignUp({ onClose }) {
       last_name: formData.last_name,
       username: formData.username,
       email: formData.email,
+      profile_picture: "",
     });
   };
 

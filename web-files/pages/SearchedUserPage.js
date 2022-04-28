@@ -15,6 +15,7 @@ import {
   getDocs,
   query,
   doc,
+  getDoc,
   setDoc,
   orderBy,
   where,
@@ -44,7 +45,7 @@ function CommentsPage() {
   const auth = getAuth();
   const router = useRouter();
   const [loaded, setLoaded] = useState(false);
-
+  const [userFriends, setUserFriends] = useState([]);
   const [profileImage, setProfileImage] = useState("")
   const [username, setUsername] = useState("")
   const [bio, setBio] = useState("")
@@ -72,7 +73,7 @@ function CommentsPage() {
     const user = auth.currentUser;
     setDoc(doc(db, "FriendRequests", uidString), {
       [user.uid]:true
-    })
+    }, {merge: true})
   }
   useEffect(() => {
     if (userSnapshot) {
@@ -88,13 +89,29 @@ function CommentsPage() {
   }
   }, [userSnapshot])
     
+  useEffect(async () => {
+    const user = auth.currentUser;
+    const sfRef = doc(db, "Friends", user.uid);
+    const collections = await getDoc(sfRef);
+    const data = collections.data();
+    let tempArray = [];
+    if (data != null) {
+      Object.keys(data).forEach(function (key) {
+        tempArray.push(key);
+      });
+
+      if (tempArray.length != 0) {
+        setUserFriends(tempArray);
+      }
+    }
+  }, []);   
 
   if (!loaded) {
     console.log("not loaded")
     return <div></div>;
   }
  
-        
+    
         
    
     
@@ -137,16 +154,16 @@ function CommentsPage() {
               </div>
               <p className=" pt-3  font-semibold text-2xl text-center">{name + ", "+ age}</p>
               <p className="pb-4 pt-1 font-medium text-lg  text-center text-slate-500">{username}</p>
-              {uidString != auth.currentUser.uid && (
-              <button
-                  type="button"
-                  onClick = {sendFriendRequest}
-                  className=" mb-4 w-40 h-10 text-sm font-semibold text-center  text-white rounded-full block shadow-xl
-                              transition ease-in-out bg-blue-600 hover:bg-blue-500 duration-400"
-                >
-                  Send Friend Request
-                  
-                </button>)}
+              {uidString != auth.currentUser.uid && userFriends.includes(uidString) == false && (
+                <button
+                    type="button"
+                    onClick = {sendFriendRequest}
+                    className=" mb-4 w-40 h-10 text-sm font-semibold text-center  text-white rounded-full block shadow-xl
+                                transition ease-in-out bg-blue-600 hover:bg-blue-500 duration-400"
+                  >
+                    Send Friend Request
+                    
+                  </button>)}
             </div>
             <div className ='border-l-4 flex  justify-between flex-grow flex-col p-2 py-2 pt-8 w-72'>
               <p className=" font-medium text-lg ">{bio}</p>

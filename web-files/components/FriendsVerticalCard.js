@@ -23,13 +23,15 @@ import FriendCard from "./FriendCard";
             const tempArray = []
             if (data != null) {
               Object.keys(data).forEach((usertags) => {
-                console.log(usertags);
+                
                 tempArray.push( {
                   key_id:usertags
                 })
                 
               })
-              setHasFriends(true)
+              if (tempArray.length != 0) {
+                setHasFriends(true)
+              }
               setArray(tempArray)
             }
         }
@@ -47,7 +49,7 @@ import FriendCard from "./FriendCard";
         ) : (
           <p className="flex relative font-medium text-3xl justify-center pb-12  mr-4 xl:mr-40 overflow-y-auto">Friends</p>
         )}
-          <div className = "grid grid-cols-2 gap-14  mr-4 xl:mr-40 ">
+          <div className = "grid grid-cols-1 sm:grid-cols-2 gap-14  mr-4 xl:mr-40 ">
            {
 
                Array?.map((item) => 
