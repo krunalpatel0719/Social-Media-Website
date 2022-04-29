@@ -48,7 +48,8 @@ function Shared({posts}) {
       <main className='flex flex-wrap relative'>
          
           <Sidebar />
-          <SharedPosts posts={posts}/>
+            <SharedPosts posts={posts}/>
+          
         </main>  
     </div>
     

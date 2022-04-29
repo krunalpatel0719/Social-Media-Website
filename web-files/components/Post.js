@@ -34,13 +34,19 @@ import { usePopper } from "react-popper";
 import { useRouter } from 'next/router'
 
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import SearchUserBox from "./SearchUserBox";
+import ShareUserBox from "./ShareUserBox";
+import { AddBusinessRounded } from "@mui/icons-material";
 
 
 function Post({ key_id, name, message, uid, profile_picture, postImage, timestamp, likes, friends}) {
   const router = useRouter();
   const user = auth.currentUser;
   
+  const wrapperRef = useRef(null);
   
+  const [searchArray, setSearchArray] = useState([])
+  //const [targetUser, setTargetUser] = useState("");
   
   // Creates the post content 
   
@@ -65,11 +71,7 @@ function Post({ key_id, name, message, uid, profile_picture, postImage, timestam
   const sendFriendRequest = () => {
     setDoc(doc(db, "FriendRequests", uid), {
       [user.uid]:true
-<<<<<<< HEAD
-    }, {merge: true});
-=======
     }, {merge: true})
->>>>>>> KrunalsTestBranch
   }
 
   // React states for the post 
@@ -180,26 +182,31 @@ function Post({ key_id, name, message, uid, profile_picture, postImage, timestam
   }
   })
   useEffect(async () => {
-    const sfRef = doc(db, 'Friends', user.uid);
-    const collections = await getDoc(sfRef);
-    const data = collections.data();
-    const tempArray = []
-    if (data != null) {
-     
-      // Object.keys(data).forEach((usertags) => {
-      //   console.log(usertags)
-      //   tempArray.push( {
-      //     key_id: usertags
-      //   })
+    console.log("use effect run again")
+      const querySnapshot = await getDocs(collection(db, "Users"));
+      const tempArray = []
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+       
         
-      // })
-      if (tempArray.length != 0) {
-        //setUserFriends(tempArray)
-       // console.log(tempArray)
-      }
-      
-    }
+    //     setSearchArray( (searchArray) => [
+    //       ...searchArray,
+    //       {
+    //         username: doc.data().username,
+    //         profile_picture: doc.data().profile_picture
+    //       }
+    //  ])
+        tempArray.push( {
+          username: doc.data().username,
+          profile_picture: doc.data().profile_picture,
+          uid: doc.id
+        })
+      });
+      setSearchArray(tempArray)
+     
+    
 
+    //setSearchArray(tempArray)
   }, [])
   return (
     <div  role = 'post' className="flex flex-col ">
@@ -343,10 +350,36 @@ function Post({ key_id, name, message, uid, profile_picture, postImage, timestam
         </div>
 
         <div className="inputIcon p-3 rounded-none rounded-br-2xl">
-        <button className="inputIcon p-3 rounded-none">
-          <ShareIcon className="h-4 " />
-          <p className="text-xs sm:text-base">Share</p>
-          </button>
+          <Popover>
+                {({ open, close }) => (
+                  <>
+                    <Popover.Button  ref={setReferenceElement}>
+                      <div className="inline-flex">
+                        <ShareIcon className="h-4 justify-center" />
+                        <p className="justify-center">Share</p>
+                      </div>
+                      
+                    </Popover.Button>
+
+                    <Popover.Panel
+                    
+                      className="rounded-md p-2 shadow-sm bg-white border flex flex-col "
+                      ref={setPopperElement}
+                      style={styles.popper}
+                      {...attributes.popper}
+                    >
+                      <div  ref={wrapperRef}  className="overflow-y-auto  flex-shrink w-36 h-36 md:w-42 md:h-42 lg:w-52 lg:h-52 flex flex-col justify-items-center">
+                                  {searchArray.map((person) => (
+                                    <ShareUserBox post_id = {key_id} profile_image = {person.profile_picture} username = {person.username} uid = {person.uid}/>
+                                  ))}
+                                    
+
+                                  </div>
+                      
+                    </Popover.Panel>
+                  </>
+                )}
+              </Popover>
         </div>
       </div>
     </div>

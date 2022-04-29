@@ -62,7 +62,7 @@ import FriendPost_med from "./FriendPost_med";
     {
         
       Array1?.map((item) => 
-      <FriendPost_med key_id = {item.key_id}/>
+      <FriendPost_med key_id = {item.key_id} friends = {Array1}/>
  )
      }
   </div>

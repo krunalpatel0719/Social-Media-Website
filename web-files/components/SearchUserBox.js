@@ -5,10 +5,7 @@
 
   import {
     doc,
-   
-   
     getDoc,
-   
     collection,
     query,
     where,
