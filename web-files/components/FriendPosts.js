@@ -16,7 +16,6 @@ import { db, auth,  user} from "../firebase";
 import {
   createUserWithEmailAndPassword,
   getAuth,
- 
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,

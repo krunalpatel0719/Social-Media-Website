@@ -362,19 +362,23 @@ function Post({ key_id, name, message, uid, profile_picture, postImage, timestam
                     </Popover.Button>
 
                     <Popover.Panel
-                    
                       className="rounded-md p-2 shadow-sm bg-white border flex flex-col "
                       ref={setPopperElement}
                       style={styles.popper}
                       {...attributes.popper}
                     >
-                      <div  ref={wrapperRef}  className="overflow-y-auto  flex-shrink w-36 h-36 md:w-42 md:h-42 lg:w-52 lg:h-52 flex flex-col justify-items-center">
+                      <button onClick={() => {
+                            close();
+                            alert("Post successfully shared!");
+                          }}>
+                      <div ref={wrapperRef}  className="overflow-y-auto  flex-shrink w-36 h-36 md:w-42 md:h-42 lg:w-52 lg:h-52 flex flex-col justify-items-center">
                                   {searchArray.map((person) => (
                                     <ShareUserBox post_id = {key_id} profile_image = {person.profile_picture} username = {person.username} uid = {person.uid}/>
                                   ))}
                                     
 
                                   </div>
+                            </button>
                       
                     </Popover.Panel>
                   </>
