@@ -23,14 +23,8 @@ jobs:
           install-yarn: true
           node-version: '16.13'
       - run:
-          name: "What branch am I on now?"
-          command: echo $CIRCLE_WORKING_DIRECTORY
-      - run:
-          name: "Check that cd actually works"
-          command: cd web-files/ && ls -a
-      - run:
           name: "Move into web-files directory and run tests"
-          command: cd web-files/ && yarn test
+          command: cd web-files/ && yarn install && yarn test
         
 workflows:
   my-custom-workflow:
