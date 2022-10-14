@@ -11,29 +11,24 @@
   ],
   "lowPriorityFiles": [
     "static/development/_buildManifest.js",
-    "static/development/_ssgManifest.js",
-    "static/development/_middlewareManifest.js"
+    "static/development/_ssgManifest.js"
   ],
+  "rootMainFiles": [],
   "pages": {
-    "/": [
+    "/CommentsPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/index.js"
-    ],
-    "/FriendRequestsPage": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/FriendRequestsPage.js"
-    ],
-    "/FriendsPage": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/FriendsPage.js"
+      "static/chunks/pages/CommentsPage.js"
     ],
     "/MainPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/MainPage.js"
+    ],
+    "/SettingsPage": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/SettingsPage.js"
     ],
     "/_app": [
       "static/chunks/webpack.js",

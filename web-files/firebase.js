@@ -7,14 +7,16 @@ import "firebase/storage";
 import { getStorage } from "firebase/storage";
 
 const app = firebase.initializeApp({
-    apiKey: "AIzaSyCILKzvuDT33Wiw74x3BJNHFKotirEu6eM",
-    authDomain: "selab2022-f6ec0.firebaseapp.com",
-    databaseURL: "https://selab2022-f6ec0-default-rtdb.firebaseio.com",
-    projectId: "selab2022-f6ec0",
-    storageBucket: "selab2022-f6ec0.appspot.com",
-    messagingSenderId: "559938006018",
-    appId: "1:559938006018:web:f447e89a5560fe15468b1b",
-    measurementId: "G-D2CSK3DMYC"
+  apiKey: "AIzaSyCW4V3_hr-y8WpaMozaB1EzRLCXirEZXAY",
+  authDomain: "social-media-clone-31986.firebaseapp.com",
+  projectId: "social-media-clone-31986",
+  storageBucket: "social-media-clone-31986.appspot.com",
+  messagingSenderId: "787430361542",
+  appId: "1:787430361542:web:bb29f96509fd3e1f9bcac7",
+
+    // databaseURL: "https://selab2022-f6ec0-default-rtdb.firebaseio.com",
+   
+    // measurementId: "G-D2CSK3DMYC"
   });
 
 ///Make references to the firestore, storage and auth
